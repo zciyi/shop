@@ -1,0 +1,94 @@
+.pic-uploader {
+    text-align: left;
+    .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .el-upload:hover {
+    border-color: #20a0ff;
+  }
+  &-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 60px;
+    height: 60px;
+    line-height: 60 px;
+    text-align: center;
+  }
+  .pic {
+    width: 200px;
+    height: 200px;
+    display: block;
+  }
+}
+  
+
+  .P-projectEdit{
+    .el-table{
+        margin-bottom: 20px;
+    }
+    .addBtn{
+        margin-bottom: 15px;
+    }
+    &Main{
+        padding-right:10px;
+    }
+    &Con{
+        margin-top:10px;
+        padding-left:10px; 
+        box-sizing: content-box;
+        .el-icon-plus:before{
+            line-height: 60px;
+        } 
+    }
+    .el-form{
+        padding-top:10px; 
+        .el-form-item__content{
+            text-align: left;
+        }
+        .btnCtrl{
+        }
+        .el-input{
+            max-width: 400px;
+        }
+    }
+    .pic{
+        position: relative;
+        width: 100px;
+        max-height: 100px;
+        img{
+            width: 100%;
+        }
+        &Icon{
+            
+            &.el-icon-close::before{
+                font-size: 14px;
+                color: #fff;
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                border-radius:50%;
+                padding: 2px;
+                background: #909399;
+            }
+            &.el-icon-close{
+                position: absolute;
+                right: -30px;
+                top: -20px;
+                display:none;
+                
+            }
+        }
+        &:hover{
+            .el-icon-close{
+                display:block;
+            }
+        }
+        
+        
+    }
+    
+}

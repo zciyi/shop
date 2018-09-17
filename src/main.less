@@ -1,0 +1,117 @@
+.P-layout{
+    &Nav{
+        min-height: 800px;
+        min-width: 160px;
+        padding-right: 0 !important;
+        background-color: #eef1f6;
+        .el-submenu .el-menu-item{
+            padding: 0;
+            padding-left: 20px !important;
+            min-width: auto;
+        }
+        .M-navMenu{
+            ul li{
+                border-bottom:1px solid #e8e8e8; 
+                ul li{
+                    background: #f5f7f8;
+                }
+                ul li:last-child{
+                    border-bottom:none;
+                }
+            }
+        }
+    }
+    &Main{
+        display: flex;
+        padding-right:10px;
+        margin-right:0 !important;
+        padding-right:  0 !important;
+        &Con{
+            padding:0 20px;
+        }
+    }
+    &Con{
+        padding-left:  0 !important;
+        padding-right:  0 !important;
+    }
+    .el-form{
+        background: #eef1f6;
+        margin-bottom:20px; 
+    }
+    .el-form-item{
+        margin-bottom:0; 
+    }
+    .el-form-item__content{
+        line-height: 30px;
+        text-align: left;
+    }
+    .M-Btn{
+        padding: 6px 20px;
+    }
+    .M-Con-left{
+        text-align: left;
+    }
+    .el-input{
+        line-height: 40px;
+    }
+    .el-input__inner{
+        line-height: 30px;
+        height: auto;
+        padding: 0 10px;
+    }
+    .el-icon-plus:before {
+        line-height: 60px;
+
+    }
+    .el-form{
+        padding: 20px;
+    }
+    .el-table{
+        margin-bottom: 20px;
+    }
+    .el-form-item__content{
+        line-height: 40px;
+    }
+    &Breadcrumb{
+        padding: 20px;
+        background: #f5f7f8;
+        
+    }
+    .el-dialog{
+        min-width: 500px;
+    }
+}
+.pic{
+    position: relative;
+    width: 100px;
+    margin:10px 0; 
+    max-height: 100px;
+    img{
+        width: 100%;
+    }
+    &Icon{
+        
+        &.el-icon-close::before{
+            font-size: 14px;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius:50%;
+            padding: 2px;
+            background: #909399;
+        }
+        &.el-icon-close{
+            position: absolute;
+            right: -30px;
+            top: -20px;
+            display:none;
+            
+        }
+    }
+    &:hover{
+        .el-icon-close{
+            display:block;
+        }
+    }
+}
