@@ -58,20 +58,20 @@ export default {
             var key = [];
             var dat = [];
             var random =Math.ceil((10+Math.random()*(20-10+1)))
-            for(var i;i<random;i++){
+            for(var i=0;i<random;i++){
               var obj ={}
               obj["_SHOP_PASS_ININ"+random]= Date.now().toString(16) + "_" + Math.ceil(Math.random() * 1000)
               dat.push(obj)
               key.push("_SHOP_PASS_ININ"+random);
             }
            
-            localStorage.setItem("_SHOP_PASS_IN",{_SHOP_PASS_IN:key,_SHOP_PASS_IN_VALUE:dat})
-            me.tip('保存成功');
+            localStorage.setItem("_SHOP_PASS_IN",JSON.stringify({_SHOP_PASS_IN:key,_SHOP_PASS_IN_VALUE:dat}) )
+            me.tip('登录成功');
             me.$router.push({path:"/home"})
 
           }
       },function(){
-          me.tip('保存失败',"warning");
+          me.tip('登录失败',"warning");
           me.load = false;
       })
     }

@@ -79,7 +79,6 @@ routes.beforeEach(({meta, path}, from, next) => {
     isLogin = keep;
 
   }
-  isLogin = true;
 　　
 　if (auth && !isLogin && path !== '/login') {  
 　　　return next({ path: '/login' })  
