@@ -17,7 +17,7 @@
                 :action="upload.url"
                 :on-success="upload.success"
                 :before-upload="upload.beforeUpload"
-                :headers="{'Content-Type': null}"
+                :headers="upload.headers"
                 v-if="!form.base.picture"
                 >
                 <i class="el-icon-plus pic-uploader-icon"></i>
@@ -100,7 +100,7 @@
                     :action="upload.url"
                     :on-success="upload.success"
                     :before-upload="upload.beforeUpload"
-                    :headers="{'Content-Type': null}"
+                    :headers="upload.headers"
                     v-if="!form.medias.picture"
                     >
                     <i class="el-icon-plus pic-uploader-icon"></i>
@@ -160,6 +160,10 @@ import './edit.less'
             dialogImageUrl: '',
             dialogVisible: false,
             upload:{
+                headers:{
+                    'Content-Type': null
+                    ,'X-Authorization':this.$Token
+                },
                 url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',
                 success:(res, file)=>{
                     me.form[me.activeName].picture = res.result.url;

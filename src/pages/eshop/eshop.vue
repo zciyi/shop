@@ -7,7 +7,7 @@
                 action="http://120.79.240.136:/admin/file/upload"
                 :on-success="upload.success"
                 :before-upload="upload.beforeUpload"
-                :headers="{'Content-Type': null}"
+                :headers="upload.headers"
                 v-if="!form.picture"
                 >
                 <i class="el-icon-plus pic-uploader-icon"></i>
@@ -40,6 +40,10 @@ import './eshop.less'
         },
         id:"",
         upload:{
+            headers:{
+                    'Content-Type': null
+                    ,'X-Authorization':this.$Token
+            },
             url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',
             success:(res, file)=>{
                 me.form.picture = res.result.url;

@@ -134,7 +134,7 @@
                         </el-upload>
                         <div class="pic">
                             <img v-if="form.bar&&form.bar.picture" @click="handlePictureCardPreview(form.bar.picture)"  :src="form.bar.picture" >
-                            <i v-if="form.bar&&form.bar.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
+                            <i v-if="form.bar&&form.bar.picture" @click="upload.remove('picture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
                     <el-form-item label="跳转链接" required>
@@ -171,7 +171,7 @@
                         </div>
                         <div class="pic">
                             <img v-if="form.pic&&form.pic.leftPicture" @click="handlePictureCardPreview(form.pic.leftPicture)"  :src="form.pic.leftPicture" >
-                            <i v-if="form.pic&&form.pic.leftPicture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
+                            <i v-if="form.pic&&form.pic.leftPicture" @click="upload.remove('leftPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
                     <el-form-item label="左视频链接" v-show="form.pic&&form.pic.leftMediaType===2" required>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="pic">
                             <img v-if="form.pic&&form.pic.rightPicture" @click="handlePictureCardPreview(form.pic.rightPicture)"  :src="form.pic.rightPicture" >
-                            <i v-if="form.pic&&form.pic.rightPicture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
+                            <i v-if="form.pic&&form.pic.rightPicture" @click="upload.remove('rightPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
                     <el-form-item label="右视频链接" v-show="form.pic&&form.pic.rightMediaType===2" required>
@@ -261,7 +261,6 @@ import './home.less'
             },
             typeUpload:"",
             upload:{
-                key:"",
                 headers:{
                     'Content-Type': null
                     ,'X-Authorization':this.$Token
@@ -284,8 +283,8 @@ import './home.less'
                     }
                     return isImg && isLt2M;
                 },
-                remove(){
-                    me.form[me.pop.type][me.typeUpload||'picture']="";
+                remove(type){
+                    me.form[me.pop.type][type||'picture']="";
                 },
                 setType(key){
                     me.typeUpload=key;

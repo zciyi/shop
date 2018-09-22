@@ -58,7 +58,7 @@
                         :action="upload.url"
                         :on-success="upload.success"
                         :before-upload="upload.beforeUpload"
-                        :headers="{'Content-Type': null}"
+                        :headers="upload.headers"
                         v-if="!form.bar.picture"
                         >
                         <i class="el-icon-plus pic-uploader-icon"></i>
@@ -107,6 +107,10 @@ import './collection.less'
                 }
             },
             upload:{
+                headers:{
+                    'Content-Type': null
+                    ,'X-Authorization':this.$Token
+                },
                 url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',
                 success:(res, file)=>{
                     me.form.bar.picture = res.result.url;

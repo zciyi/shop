@@ -84,7 +84,7 @@
                         :action="upload.url"
                         :on-success="upload.success"
                         :before-upload="upload.beforeUpload"
-                        :headers="{'Content-Type': null}"
+                        :headers="upload.headers"
                         v-if="!form.icon"
                         >
                         <i class="el-icon-plus pic-uploader-icon"></i>
@@ -111,7 +111,7 @@
                         :action="upload.url"
                         :on-success="upload.success"
                         :before-upload="upload.beforeUpload"
-                        :headers="{'Content-Type': null}"
+                        :headers="upload.headers"
                         v-if="!form.clickPicture"
                         >
                         <i class="el-icon-plus pic-uploader-icon"></i>
@@ -161,6 +161,10 @@ import './bottom.less'
             dialogImageUrl: '',
             dialogVisible: false,
             upload:{
+                headers:{
+                    'Content-Type': null
+                    ,'X-Authorization':this.$Token
+                },
                 url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',
                 setType(type){
                     uploadType = type
