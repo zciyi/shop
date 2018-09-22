@@ -57,6 +57,11 @@ var routes = new Router({
       path: '*',
       hidden: true,
       redirect: { path: '/forbidden' }
+    },
+    {
+      path: '/',
+      hidden: true,
+      redirect: { path: '/home' }
     }
   ]
 })
@@ -65,6 +70,7 @@ routes.beforeEach(({meta, path}, from, next) => {
   const {auth = true} = meta   
   var isLogin = false;
   var getDat = localStorage.getItem("_SHOP_PASS_IN")
+  var isPassLogin = localStorage.getItem("_SHOP_PASS_IN_WITHOUT_TOKEN")||true
   getDat = JSON.parse(getDat)
   console.log(getDat)
   if(getDat){
@@ -75,14 +81,19 @@ routes.beforeEach(({meta, path}, from, next) => {
           keep =false
         }
       })
+     
     });
+    if((new Date().getTime()-getDat.TIME)>86400*1000){
+      keep =false
+    }
     isLogin = keep;
 
   }
 　　
-　if (auth && !isLogin && path !== '/login') {  
+　if (((auth && !isLogin)||(isPassLogin==='0')) && path !== '/login') {  
 　　　return next({ path: '/login' })  
 　}
+
   next();
 })
 export default routes

@@ -54,32 +54,51 @@
             border
             style="width: 100%" >
                 <el-table-column
-                prop="mediaType"
-                label="类型">
+                prop="width"
+                label="左宽度">
+                </el-table-column>
+                <el-table-column
+                prop="leftMediaType"
+                label="左类型">
                 <template slot-scope="scope">
-                    {{scope.row.mediaType==1?"图片":"视频"}}
+                    {{scope.row.leftMediaType==1?"图片":"视频"}}
                 </template>
                 </el-table-column>
                 <el-table-column
-                prop="picture"
-                label="图片/视频">
+                prop="leftPicture"
+                label="左图片/左视频">
                 <template slot-scope="scope">
-                    <img  :src="scope.row.picture" v-if="scope.row.mediaType==1&&scope.row.picture" class="pic">
-                    <div v-if="scope.row.mediaType==2&&scope.row.video" >{{scope.row.video}}</div>
+                    <img  :src="scope.row.leftPicture" v-if="scope.row.leftMediaType==1&&scope.row.leftPicture" class="pic">
+                    <div v-if="scope.row.leftMediaType==2&&scope.row.leftVideo" >{{scope.row.leftVideo}}</div>
                 </template>
                 </el-table-column>
                 <el-table-column
-                prop="link"
-                label="跳转链接">
-                     <template slot-scope="scope" v-if="scope.row.mediaType===1">
-                        {{scope.row.link}}
+                prop="leftLink"
+                label="左跳转链接">
+                     <template slot-scope="scope" v-if="scope.row.leftMediaType===1">
+                        {{scope.row.leftLink}}
                     </template>
                 </el-table-column>
                 <el-table-column
-                prop="position"
-                label="位置">
-                    <template slot-scope="scope">
-                        {{scope.row.position===1?"左":"右"}}
+                prop="rightMediaType"
+                label="右类型">
+                <template slot-scope="scope">
+                    {{scope.row.rightMediaType==1?"图片":"视频"}}
+                </template>
+                </el-table-column>
+                <el-table-column
+                prop="rightPicture"
+                label="右图片/右视频">
+                <template slot-scope="scope">
+                    <img  :src="scope.row.rightPicture" v-if="scope.row.rightMediaType==1&&scope.row.rightPicture" class="pic">
+                    <div v-if="scope.row.rightMediaType==2&&scope.row.rightVideo" >{{scope.row.rightVideo}}</div>
+                </template>
+                </el-table-column>
+                <el-table-column
+                prop="rightLink"
+                label="跳转链接">
+                     <template slot-scope="scope" v-if="scope.row.rightMediaType===1">
+                        {{scope.row.rightLink}}
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -108,7 +127,7 @@
                         :action="upload.url"
                         :on-success="upload.success"
                         :before-upload="upload.beforeUpload"
-                        :headers="{'Content-Type': null}"
+                        :headers="upload.headers"
                         v-if="!form.bar.picture"
                         >
                         <i class="el-icon-plus pic-uploader-icon"></i>
@@ -125,39 +144,71 @@
             </div>
             <div v-show="pop.type==='pic'">
                 <el-form ref="form" :model="form" label-width="150px">
-                    <el-form-item label="类型" class="radio" required>
-                        <el-radio-group v-model="form.pic.mediaType">
+                    <el-form-item label="左宽度"  required>
+                        <el-input v-model="form.pic.width" placeholder="请输入0-100的数字"></el-input>
+                    </el-form-item>
+                    <el-form-item label="右宽度">
+                       {{form.pic.width?(100-form.pic.width):100}}
+                    </el-form-item>
+                    <el-form-item label="左类型" class="radio" required>
+                        <el-radio-group v-model="form.pic.leftMediaType">
                             <el-radio :label="1">图片</el-radio>
                             <el-radio :label="2">视频</el-radio>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="图片" v-show="form.pic&&form.pic.mediaType===1" required>
-                        <el-upload
-                        class="pic-uploader"
-                        :action="upload.url"
-                        :on-success="upload.success"
-                        :before-upload="upload.beforeUpload"
-                        :headers="{'Content-Type': null}"
-                        v-if="!form.pic.picture"
-                        >
-                        <i class="el-icon-plus pic-uploader-icon"></i>
-                        </el-upload>
+                     <el-form-item label="左图片" v-show="form.pic&&form.pic.leftMediaType===1" required>
+                        <div   @click="upload.setType('leftPicture')">
+                            <el-upload
+                            class="pic-uploader"
+                            :action="upload.url"
+                            :on-success="upload.success"
+                            :before-upload="upload.beforeUpload"
+                            :headers="upload.headers"
+                            v-if="!form.pic.leftPicture"
+                            >
+                            <i class="el-icon-plus pic-uploader-icon"></i>
+                            </el-upload>
+                        </div>
                         <div class="pic">
-                            <img v-if="form.pic&&form.pic.picture" @click="handlePictureCardPreview(form.pic.picture)"  :src="form.pic.picture" >
-                            <i v-if="form.pic&&form.pic.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
+                            <img v-if="form.pic&&form.pic.leftPicture" @click="handlePictureCardPreview(form.pic.leftPicture)"  :src="form.pic.leftPicture" >
+                            <i v-if="form.pic&&form.pic.leftPicture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
-                    <el-form-item label="视频链接" v-show="form.pic&&form.pic.mediaType===2" required>
-                        <el-input v-model="form.pic.video" placeholder="请输入视频链接"></el-input>
+                    <el-form-item label="左视频链接" v-show="form.pic&&form.pic.leftMediaType===2" required>
+                        <el-input v-model="form.pic.leftVideo" placeholder="请输入视频链接"></el-input>
                     </el-form-item>
-                    <el-form-item label="跳转链接" v-show="form.pic&&form.pic.mediaType===1" required>
-                        <el-input v-model="form.pic.link" placeholder="请输入跳转链接"></el-input>
+                    <el-form-item label="左跳转链接" v-show="form.pic&&form.pic.leftMediaType===1" required>
+                        <el-input v-model="form.pic.leftLink" placeholder="请输入跳转链接"></el-input>
                     </el-form-item>
-                    <el-form-item label="位置" class="radio" required>
-                        <el-radio-group v-model="form.pic.position">
-                            <el-radio :label="1">左</el-radio>
-                            <el-radio :label="2">右</el-radio>
+                    <el-form-item label="右类型" class="radio" required>
+                        <el-radio-group v-model="form.pic.rightMediaType">
+                            <el-radio :label="1">图片</el-radio>
+                            <el-radio :label="2">视频</el-radio>
                         </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="右图片" v-show="form.pic&&form.pic.rightMediaType===1" required>
+                        <div   @click="upload.setType('rightPicture')">
+                            <el-upload
+                            class="pic-uploader"
+                            :action="upload.url"
+                            :on-success="upload.success"
+                            :before-upload="upload.beforeUpload"
+                            :headers="upload.headers"
+                            v-if="!form.pic.rightPicture"
+                            >
+                            <i class="el-icon-plus pic-uploader-icon"></i>
+                            </el-upload>
+                        </div>
+                        <div class="pic">
+                            <img v-if="form.pic&&form.pic.rightPicture" @click="handlePictureCardPreview(form.pic.rightPicture)"  :src="form.pic.rightPicture" >
+                            <i v-if="form.pic&&form.pic.rightPicture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
+                        </div>
+                    </el-form-item>
+                    <el-form-item label="右视频链接" v-show="form.pic&&form.pic.rightMediaType===2" required>
+                        <el-input v-model="form.pic.rightVideo" placeholder="请输入视频链接"></el-input>
+                    </el-form-item>
+                    <el-form-item label="右跳转链接" v-show="form.pic&&form.pic.rightMediaType===1" required>
+                        <el-input v-model="form.pic.rightLink" placeholder="请输入跳转链接"></el-input>
                     </el-form-item>
                 </el-form>
             </div>
@@ -193,21 +244,35 @@ import './home.less'
                 base:{
                     backgroundColor:"rgba(225, 225, 225, 1)"
                 },
-                pic:{
-                    picture:""
-                    ,mediaType:1
-                    ,link:""
-                    ,position:1
+                pic:
+                {
+                    "leftLink": "",
+                    "rightLink": "",
+                    "leftMediaType": 0,
+                    "rightMediaType": 0,
+                    "leftPicture": "",
+                    "rightPicture": "",
+                    "width": 0,
+                    "position": 0,
+                    "leftVideo": "",
+                    "rightVideo": ""
                 }
+
             },
+            typeUpload:"",
             upload:{
+                key:"",
+                headers:{
+                    'Content-Type': null
+                    ,'X-Authorization':this.$Token
+                },
                 url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',                
                 success:(res, file)=>{
-                    me.form[me.pop.type].picture = res.result.url;
+                    me.form[me.pop.type][me.typeUpload||'picture'] = res.result.url;
                     console.log(me.form)
                 },
                 beforeUpload:(file)=>{
-                    var format = file.type.split("/")
+                    var format = file.type && file.type.split("/")
                     const isImg =["png","gif","jpeg"].indexOf(format.length&&format[1])>-1;
                     const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -220,7 +285,10 @@ import './home.less'
                     return isImg && isLt2M;
                 },
                 remove(){
-                    me.form[me.pop.type].picture="";
+                    me.form[me.pop.type][me.typeUpload||'picture']="";
+                },
+                setType(key){
+                    me.typeUpload=key;
                 }
             }
             ,activeName:'base'
@@ -252,12 +320,27 @@ import './home.less'
                             break
                         case "pic":
                             type = "catalogs";
-                            if(me.form.pic.mediaType===2){
-                                validate.video="请输入视频链接"
+                            if(me.form.pic.leftMediaType===2){
+                                validate.leftVideo="请输入左视频链接"
                             }else{
-                                validate.picture = "请上传图片"
-                                validate.link={
-                                    tip:"请输入跳转链接",
+                                validate.leftPicture = "请上传左图片"
+                                validate.leftLink={
+                                    tip:"请输左入跳转链接",
+                                    validate:function(val){
+                                        if(!me.$util.RegExp.url.test(val)){
+                                            this.tip = "跳转链接格式不正确"
+                                            return false
+                                        }
+                                        return true
+                                    }
+                                }
+                            }
+                            if(me.form.pic.rightMediaType===2){
+                                validate.rightVideo="请输入右视频链接"
+                            }else{
+                                validate.rightPicture = "请上传右图片"
+                                validate.rightLink={
+                                    tip:"请输入右跳转链接",
                                     validate:function(val){
                                         if(!me.$util.RegExp.url.test(val)){
                                             this.tip = "跳转链接格式不正确"
@@ -272,6 +355,18 @@ import './home.less'
                     var tip = me.checkData(validate,me.form[me.pop.type])
                     if(!tip){
                         return false
+                    }
+                    if(me.pop.type==='pic'){
+                        if(me.form[me.pop.type].leftMediaType===1)me.form[me.pop.type].leftVideo=""
+                        if(me.form[me.pop.type].leftMediaType===2){
+                            me.form[me.pop.type].leftPicture=""
+                            me.form[me.pop.type].leftLink=""
+                        }
+                        if(me.form[me.pop.type].rightMediaType===1)me.form[me.pop.type].rightVideo=""
+                        if(me.form[me.pop.type].rightMediaType===2){
+                            me.form[me.pop.type].rightPicture=""
+                            me.form[me.pop.type].rightLink=""
+                        }
                     }
                     if(me.pop.item.index||me.pop.item.index===0){
                         me.$set(me[type],me.pop.item.index,me.form[me.pop.type])
@@ -334,19 +429,29 @@ import './home.less'
                 var row = scope.row
                 this.pop.item = row;
                 this.form.pic ={
-                    picture:row.picture||""
-                    ,mediaType:(row.mediaType|| 1)
-                    ,link:row.link||""
+                    leftPicture:row.leftPicture||""
+                    ,leftMediaType:(row.leftMediaType|| 1)
+                    ,leftLink:row.leftLink||""
                     ,position:(row.position || 1)
-                    ,video:row.video||''
+                    ,leftVideo:row.leftVideo||''
+                    ,width:row.width
+                    ,rightPicture:row.rightPicture||""
+                    ,rightMediaType:(row.rightMediaType|| 1)
+                    ,rightLink:row.rightLink||""
+                    ,rightVideo:row.rightVideo||''
                 }
             }else{
                 this.form.pic ={
-                    picture:""
-                    ,mediaType:1
-                    ,link:""
-                    ,position:1
-                    ,video:""
+                    "leftLink": "",
+                    "rightLink": "",
+                    "leftMediaType": 1,
+                    "rightMediaType": 1,
+                    "leftPicture": "",
+                    "rightPicture": "",
+                    "width": 0,
+                    "position": 0,
+                    "leftVideo": "",
+                    "rightVideo": ""
                 }
             }
         },

@@ -64,8 +64,12 @@ export default {
               dat.push(obj)
               key.push("_SHOP_PASS_ININ"+random);
             }
-           
-            localStorage.setItem("_SHOP_PASS_IN",JSON.stringify({_SHOP_PASS_IN:key,_SHOP_PASS_IN_VALUE:dat}) )
+            localStorage.setItem("_SHOP_PASS_IN",JSON.stringify({
+              _SHOP_PASS_IN:key
+              ,_SHOP_PASS_IN_VALUE:dat
+              ,TIME:new Date().getTime()
+              ,_SHOP_SET_SESSION:re.sessionId
+            }) )
             me.tip('登录成功');
             me.$router.push({path:"/home"})
 

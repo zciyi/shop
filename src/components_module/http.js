@@ -4,6 +4,7 @@ var util = require('./util').default
 var ajxa = function (Vue, options) {
     var uri_map = {};
     var err_code = {};
+    var Token = localStorage.getItem("_SHOP_PASS_IN_TOKEN")||""
     var request = (function(){
         
         var defConf = {
@@ -111,7 +112,9 @@ var ajxa = function (Vue, options) {
                     }
                     delete headers['X-Requested-With']
                 }
-
+                if(Token){
+                    headers['X-Authorization'] = Token;
+                }
                 Object.keys(headers).forEach(function(key) {
                     xhr.setRequestHeader(key,headers[key])
                 });
@@ -124,6 +127,11 @@ var ajxa = function (Vue, options) {
                     if(request.onResponseCallback && request.onResponseCallback(this,config) === false){
                         return
                     }
+                    if(this.status === 401||this.status === 403){
+                        localStorage.setItem("_SHOP_PASS_IN_WITHOUT_TOKEN",0)
+                        window.location.href ="/#/login"
+                        return
+                    }
                     if(this.status >= 200 && this.status < 300 || this.status === 304){
                         var value = this.responseText
                         if(dataType.toLowerCase() === 'json'){
@@ -133,6 +141,10 @@ var ajxa = function (Vue, options) {
                                 reject(err)
                                 return
                             }
+                        }
+                        if(value.token){
+                            Token = value.token;
+                            localStorage.setItem("_SHOP_PASS_IN_TOKEN",Token)
                         }
 
                         if (value && value.code===0) {
@@ -254,6 +266,7 @@ var ajxa = function (Vue, options) {
     Vue.prototype.$request = request;
     Vue.prototype.$util = util;
     Vue.prototype.$config = config;
+    Vue.prototype.$Token = Token;
     
    
 }
