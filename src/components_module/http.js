@@ -131,6 +131,8 @@ var ajxa = function (Vue, options) {
                         localStorage.setItem("_SHOP_PASS_IN_WITHOUT_TOKEN",0)
                         window.location.href ="/#/login"
                         return
+                    }else{
+                        localStorage.setItem("_SHOP_PASS_IN_WITHOUT_TOKEN",1)
                     }
                     if(this.status >= 200 && this.status < 300 || this.status === 304){
                         var value = this.responseText
