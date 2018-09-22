@@ -305,21 +305,25 @@ import './edit.less'
         }
         ,onSubmit(){
             var me = this;
-            if(this.activeName==='base'||this.activeName === "medias"){
+            if(this.activeName==='base'){
                 var tip = me.checkData({picture:"请上传图片"},me.form.base)
                 if(!tip)return false
                 this.activeName = "medias";
             }else {
-                var isPass = me.checkData({medias:{
-                    tip:"请添加瀑布图",
-                    validate:function(val){
-                        if(val.length){
-                            return true
+                var isPass = me.checkData({picture:"请上传图片"},me.form.base)
+                if(isPass){
+                    isPass = me.checkData({medias:{
+                        tip:"请添加瀑布图",
+                        validate:function(val){
+                            if(val.length){
+                                return true
+                            }
+                            return false
                         }
-                        return false
                     }
+                    },{medias:me.medias})
                 }
-                },{medias:me.medias})
+                
                 if(!isPass||this.load)return
                 var id = this.$route.query.id
                 var url =id?"/updateProject":"/saveProject"

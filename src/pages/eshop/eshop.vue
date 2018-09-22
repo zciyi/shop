@@ -4,7 +4,7 @@
             <el-form-item label="图片" >
                 <el-upload
                 class="pic-uploader"
-                action="http://120.79.240.136:/admin/file/upload"
+                :action="upload.url"
                 :on-success="upload.success"
                 :before-upload="upload.beforeUpload"
                 :headers="upload.headers"
