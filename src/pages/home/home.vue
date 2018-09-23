@@ -1,18 +1,9 @@
 <template>
     <div class="P-home">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="基础配置" name="base"></el-tab-pane>
+        <el-tabs v-model="activeName">
             <el-tab-pane label="轮播图" name="bar"></el-tab-pane>
             <el-tab-pane label="瀑布图" name="pic"></el-tab-pane>
         </el-tabs>
-        <div v-show="activeName==='base'">
-            <el-form ref="form" :model="form" label-width="150px">
-                <el-form-item label="菜单颜色设置">
-                <el-color-picker v-model="form.base.backgroundColor" show-alpha></el-color-picker>
-                </el-form-item>
-            </el-form>
-
-        </div>
         <div v-show="activeName==='bar'">
             <div class="addBtn M-Con-left" >
                 <el-button class="M-Btn" type="primary" @click="broadcastsEdit()">新增 </el-button>
@@ -119,7 +110,7 @@
             width="60%"
             :before-close="pop.close"
             center>
-            <div v-show="pop.type==='bar'">
+            <div v-if="pop.type==='bar'">
                 <el-form ref="form" :model="form" label-width="150px">
                     <el-form-item label="背景图" required>
                         <el-upload
@@ -142,7 +133,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <div v-show="pop.type==='pic'">
+            <div v-if="pop.type==='pic'">
                 <el-form ref="form" :model="form" label-width="150px">
                     <el-form-item label="左宽度"  required>
                         <el-input v-model="form.pic.width" placeholder="请输入0-100的数字"></el-input>
@@ -268,7 +259,6 @@ import './home.less'
                 url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',                
                 success:(res, file)=>{
                     me.form[me.pop.type][me.typeUpload||'picture'] = res.result.url;
-                    console.log(me.form)
                 },
                 beforeUpload:(file)=>{
                     var format = file.type && file.type.split("/")
@@ -290,7 +280,7 @@ import './home.less'
                     me.typeUpload=key;
                 }
             }
-            ,activeName:'base'
+            ,activeName:'bar'
             ,broadcasts:[]
             ,catalogs:[]
             ,pop:{
@@ -397,8 +387,6 @@ import './home.less'
         })
     },
     methods: {
-        handleClick(e){
-        },
         broadcastsEdit(scope){
             this.pop.visible = true;
             this.pop.title = scope?"编辑轮播图":"新增轮播图"

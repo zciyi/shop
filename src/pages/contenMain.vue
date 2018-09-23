@@ -62,7 +62,8 @@ export default {
     },
 
     getNav(val){
-     var me = this;
+      cur = [];
+      var me = this;
       var breadcrumb = [{
         text:"home",
         path:"/home"

@@ -72,7 +72,6 @@ routes.beforeEach(({meta, path}, from, next) => {
   var getDat = localStorage.getItem("_SHOP_PASS_IN")
   var isPassLogin = localStorage.getItem("_SHOP_PASS_IN_WITHOUT_TOKEN")||true
   getDat = JSON.parse(getDat)
-  console.log(getDat)
   if(getDat){
     var keep =true
     getDat._SHOP_PASS_IN && getDat._SHOP_PASS_IN.forEach(i => {

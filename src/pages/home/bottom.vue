@@ -30,7 +30,7 @@
             prop="clickType"
             label="点击类型">
             <template slot-scope="scope">
-                {{scope.row.type===1?"图片":"链接"}}
+                {{scope.row.clickType===1?"图片":"链接"}}
             </template>
             </el-table-column>
             <el-table-column
@@ -85,7 +85,7 @@
                         :on-success="upload.success"
                         :before-upload="upload.beforeUpload"
                         :headers="upload.headers"
-                        v-if="!form.icon"
+                        v-if="!form.icon&&upload.headers"
                         >
                         <i class="el-icon-plus pic-uploader-icon"></i>
                         </el-upload>
@@ -112,7 +112,7 @@
                         :on-success="upload.success"
                         :before-upload="upload.beforeUpload"
                         :headers="upload.headers"
-                        v-if="!form.clickPicture"
+                        v-if="!form.clickPicture&&upload.headers"
                         >
                         <i class="el-icon-plus pic-uploader-icon"></i>
                         </el-upload>

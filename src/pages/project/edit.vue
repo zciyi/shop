@@ -8,7 +8,7 @@
             <el-form-item label="标题">
                 <el-input v-model="form.base.title" placeholder="请输入标题"></el-input>
             </el-form-item>
-            <el-form-item label="菜单颜色设置">
+            <el-form-item label="标题颜色设置">
                 <el-color-picker v-model="form.base.backgroundColor" show-alpha></el-color-picker>
             </el-form-item>
             <el-form-item label="图片" required>
@@ -18,7 +18,7 @@
                 :on-success="upload.success"
                 :before-upload="upload.beforeUpload"
                 :headers="upload.headers"
-                v-if="!form.base.picture"
+                v-if="!form.base.picture&&upload.headers"
                 >
                 <i class="el-icon-plus pic-uploader-icon"></i>
                 </el-upload>
@@ -101,7 +101,7 @@
                     :on-success="upload.success"
                     :before-upload="upload.beforeUpload"
                     :headers="upload.headers"
-                    v-if="!form.medias.picture"
+                    v-if="!form.medias.picture&&upload.headers"
                     >
                     <i class="el-icon-plus pic-uploader-icon"></i>
                     </el-upload>

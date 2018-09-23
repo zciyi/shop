@@ -38,7 +38,7 @@
             width="60%"
             :before-close="pop.close"
             center>
-            <div v-show="pop.type==='bar'">
+            <div v-if="pop.type==='bar'">
                 <el-form ref="form" :model="form" label-width="150px">
                     <el-form-item label="背景图" required>
                         <el-upload
@@ -99,7 +99,6 @@ import './about.less'
                 url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',
                 success:(res, file)=>{
                     me.form.bar.picture = res.result.url;
-                    console.log(me.form)
                 },
                 beforeUpload:(file)=>{
                     var format = file.type.split("/")

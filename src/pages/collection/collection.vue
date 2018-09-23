@@ -1,18 +1,6 @@
 <template>
     <div class="P-collection">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="基础配置" name="base"></el-tab-pane>
-            <el-tab-pane label="轮播图" name="bar"></el-tab-pane>
-        </el-tabs>
-        <div v-show="activeName==='base'">
-            <el-form ref="form" :model="form" label-width="150px">
-                <el-form-item label="菜单颜色设置">
-                <el-color-picker v-model="form.base.backgroundColor" show-alpha></el-color-picker>
-                </el-form-item>
-            </el-form>
-
-        </div>
-        <div v-show="activeName==='bar'">
+        <div>
             <div class="addBtn M-Con-left" >
                 <el-button class="M-Btn" type="primary" @click="broadcastsEdit()">新增 </el-button>
             </div>
@@ -42,7 +30,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-
+            
         </div>
         <el-dialog
             :title="pop.title"
@@ -50,7 +38,7 @@
             width="60%"
             :before-close="pop.close"
             center>
-            <div v-show="pop.type==='bar'">
+            <div v-if="pop.type==='bar'">
                 <el-form ref="form" :model="form" label-width="150px">
                     <el-form-item label="背景图" required>
                         <el-upload
@@ -84,7 +72,7 @@
             <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
         <div class="btnCtrl">
-            <el-button  type="primary" size="large" class="M-Btn" @click="onSubmit">{{activeName==='bar'?'保存':'下一步'}}</el-button>
+            <el-button  type="primary" size="large" class="M-Btn" @click="onSubmit">保存</el-button>
         </div>
             
     </div>
@@ -133,7 +121,6 @@ import './collection.less'
                     me.form.bar.picture="";
                 }
             }
-            ,activeName:'base'
             ,broadcasts:[]
             ,pop:{
                 visible:false,
@@ -188,8 +175,6 @@ import './collection.less'
         })
     },
     methods: {
-        handleClick(e){
-        },
         broadcastsEdit(scope){
             this.pop.visible = true;
             this.pop.title = scope?"编辑轮播图":"新增轮播图"
@@ -219,45 +204,34 @@ import './collection.less'
         }
         ,onSubmit(){
             var me = this;
-            if(this.activeName==='bar'){
-                if(!this.form.base.backgroundColor){
-                  this.tip("请设置色值","warning")
-                  return
-                }else if(!this.broadcasts.length){
-                  this.tip("请添加轮播图","warning")
-                  return
-                }
-                if(this.load)return
-                this.load = true
-                this.$request({
-                    url:"/updateCollection",
-                    method:"post",
-                    params:{
-                        id:this.id
-                    },
-                    data:{
-                        backgroundColor:this.form.base.backgroundColor,
-                        broadcasts:this.broadcasts
-                    }
-                }).then(function(re){
-                    if(re){
-                        me.tip('保存成功');
-                    }
-                    me.load = false
-                },function(){
-                    me.tip('保存失败',"warning");
-                    me.load = false
-                })
-
-            }else{
-                var keep = false;
-                this.nav.forEach(function(item,index){
-                    if(me.activeName===item&&!keep){
-                        me.activeName = me.nav[index+1]
-                        keep = true
-                    }
-                });
+            if(!this.form.base.backgroundColor){
+                this.tip("请设置色值","warning")
+                return
+            }else if(!this.broadcasts.length){
+                this.tip("请添加轮播图","warning")
+                return
             }
+            if(this.load)return
+            this.load = true
+            this.$request({
+                url:"/updateCollection",
+                method:"post",
+                params:{
+                    id:this.id
+                },
+                data:{
+                    backgroundColor:this.form.base.backgroundColor,
+                    broadcasts:this.broadcasts
+                }
+            }).then(function(re){
+                if(re){
+                    me.tip('保存成功');
+                }
+                me.load = false
+            },function(){
+                me.tip('保存失败',"warning");
+                me.load = false
+            })
             
 
         },

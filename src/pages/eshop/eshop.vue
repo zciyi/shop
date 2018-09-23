@@ -8,7 +8,7 @@
                 :on-success="upload.success"
                 :before-upload="upload.beforeUpload"
                 :headers="upload.headers"
-                v-if="!form.picture"
+                v-if="!form.picture&&upload.headers"
                 >
                 <i class="el-icon-plus pic-uploader-icon"></i>
                 </el-upload>
