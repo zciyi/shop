@@ -16,7 +16,7 @@ export default {
 </script>
 <style>
 .M-header{
-  background: #1182f3;
+  background: #0D0D0D;
   height: 50px;
   line-height: 50px;
   color: #fff;
