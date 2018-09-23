@@ -21,35 +21,35 @@ import './NavMenu.less'
     data(){
         return {
           nav:[{
-            text:"home",
+            text:"HOME",
             path:"/home"
           },{
-            text:"menu",
-            path:"/menu",
-          },{
-              text:"bottom",
+              text:"BOTTOM",
               path:"/bottom",
           },{
-            text:"campaign",
+            text:"CAMPAIGN",
             path:"/campaign"
           },{
-            text:"collection",
+            text:"COLLECTION",
             path:"/collection"
           },{
-            text:"eshop",
+            text:"E_SHOP",
             path:"/eshop"
           },{
-            text:"project",
+            text:"PROJECT",
             path:"/project"
           },{
-            text:"shop",
+            text:"SHOP",
             path:"/shop"
           },{
-            text:"press",
+            text:"PRESS",
             path:"/press"
           },{
-            text:"about",
+            text:"ABOUT CARSYDA",
             path:"/about"
+          },{
+            text:"MENU",
+            path:"/menu",
           }]
           ,activeName:this.$route.path||"/home"
         }

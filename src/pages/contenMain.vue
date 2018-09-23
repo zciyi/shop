@@ -65,16 +65,16 @@ export default {
       cur = [];
       var me = this;
       var breadcrumb = [{
-        text:"home",
+        text:"HOME",
         path:"/home"
       },{
-        text:"bottom",
+        text:"BOTTOM",
         path:"/bottom"
       },{
-        text:"menu",
+        text:"MENU",
         path:"/menu"
       },{
-        text:"campaign列表",
+        text:"CAMPAIN列表",
         path:"/campaign"
         ,hasSubNav:true
         ,subNav:[{
@@ -83,10 +83,10 @@ export default {
           }
         ]
       },{
-        text:"shop",
+        text:"SHOP",
         path:"/shop"
       },{
-        text:"press列表",
+        text:"PRESS列表",
         path:"/press"
         ,hasSubNav:true
         ,subNav:[{
@@ -95,7 +95,7 @@ export default {
           }
         ]
       },{
-        text:"project列表",
+        text:"PROJECT列表",
         path:"/project"
         ,hasSubNav:true
         ,subNav:[{
@@ -104,16 +104,16 @@ export default {
           }
         ]
       },{
-        text:"project",
+        text:"PROJECT",
         path:"/project"
       },{
-        text:"about",
+        text:"ABOUT CARSYDA",
         path:"/about"
       },{
-        text:"collection",
+        text:"COLLECTION",
         path:"/collection"
       },{
-        text:"eshop",
+        text:"E-SHOP",
         path:"/eshop"
       }]
       this.forItem(breadcrumb,val,cur,[])
