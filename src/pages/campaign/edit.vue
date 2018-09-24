@@ -306,7 +306,8 @@ import './edit.less'
                 this.activeName = "medias";
             }else {
                 var isPass = me.checkData({picture:"请上传图片"},me.form.base)
-                if(!isPass){
+                debugger
+                if(isPass){
                     isPass = me.checkData({medias:{
                         tip:"请添加瀑布图",
                         validate:function(val){
