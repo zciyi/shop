@@ -50,6 +50,9 @@ import './NavMenu.less'
           },{
             text:"MENU",
             path:"/menu",
+          },{
+            text:"IP",
+            path:"/ip",
           }]
           ,activeName:this.$route.path||"/home"
         }

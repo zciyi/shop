@@ -115,6 +115,9 @@ export default {
       },{
         text:"E-SHOP",
         path:"/eshop"
+      },{
+        text:"IP",
+        path:"/ip"
       }]
       this.forItem(breadcrumb,val,cur,[])
       return cur

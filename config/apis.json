@@ -36,4 +36,5 @@
     ,"/deleteCampaign":"/admin/campaign/delete/{id}"
     ,"/deletePress":"/admin/press/delete/{id}"
     ,"/deleteProject":"/admin/project/delete/{id}"
+    ,"/getIpAddress":"/admin/ipAddress/list"
 }

@@ -17,6 +17,7 @@ import pressEdit from "@/pages/press/edit"
 import home from "@/pages/home/home"
 import menu from "@/pages/home/menu"
 import bottom from "@/pages/home/bottom"
+import ip from "@/pages/ip/ip"
 
 
 
@@ -40,7 +41,8 @@ var routes = new Router({
         { path: '/press', component: press, name: 'press' },
         { path: '/pressEdit', component: pressEdit, name: 'pressEdit' },
         { path: '/menu', component: menu, name: 'menu' },
-        { path: '/bottom', component: bottom, name: 'bottom' }
+        { path: '/bottom', component: bottom, name: 'bottom' },
+        { path: '/ip', component: ip, name: 'ip' }
       ]
     },
     {
