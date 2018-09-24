@@ -24,6 +24,7 @@
             width="100">
             <template slot-scope="scope">
                 <el-button @click="add(scope)" type="text" size="small">编辑</el-button>
+                <el-button @click="deleteCampaign(scope)" type="text" size="small">删除</el-button>
             </template>
         </el-table-column>
       </el-table>
@@ -85,6 +86,40 @@ import './campaign.less'
             query.id = scope.row.id
           }
           this.$router.push({path:"/campaignEdit",query:query})
+      },
+      tip(title,type,duration){
+          this.$notify({
+              title: title || '',
+              type: type||'success',
+              duration:duration||1000
+          });
+
+      },
+      deleteCampaign(scope){
+        this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(() => {
+          var me = this;
+          var params={}
+          params.id = scope.row.id
+          if(me.loadDelete)return
+          me.loadDelete = true;
+          me.$request({
+              url:"/deleteCampaign",
+              method:"delete",
+              params:params,
+              data:{}
+          }).then(function(re){
+              me.loadDelete = false;
+              me.tip( '删除成功!');
+              me.getData(me.currentPage,me.pagesSize);
+          },function(){
+              me.loadDelete = false;
+          })
+        }).catch(() => {
+
+        });
       }
     }
   }

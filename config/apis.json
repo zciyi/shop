@@ -31,5 +31,9 @@
     ,"/updateMenu":"/admin/menu/config/update"
     ,"/login":"/external/auth/login"
     ,"/uploadFile":"/admin/file/upload"
-    
+    ,"/deleteStore":"/admin/store/delete/{id}"
+    ,"/deleteBottom":"/admin/bottom/delete/{id}"
+    ,"/deleteCampaign":"/admin/campaign/delete/{id}"
+    ,"/deletePress":"/admin/press/delete/{id}"
+    ,"/deleteProject":"/admin/project/delete/{id}"
 }

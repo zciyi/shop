@@ -40,6 +40,7 @@
             width="100">
             <template slot-scope="scope">
                 <el-button @click="add(scope)" type="text" size="small">编辑</el-button>
+                <el-button @click="deleteStore(scope)" type="text" size="small">删除</el-button>
             </template>
         </el-table-column>
       </el-table>
@@ -108,197 +109,223 @@
 import './shop.less'
   export default {
     data() {
-      var me = this;
-      return {
-        tableData: [],
-        currentPage:1,
-        total:0,
-        pagesSize:5,
-        pagesSizes:[5,10,20,30,40,50],
-        dialogImageUrl: '',
-        dialogVisible: false,
-        form: {
-          "address": "",
-          "market": "",
-          "orderNumber": 0,
-          "phone": "",
-          "picture": "",
-          "provice": ""
-        },
-        upload:{
-            headers:{
-                'Content-Type': null
-                ,'X-Authorization':this.$Token
+        var me = this;
+        return {
+            tableData: [],
+            currentPage:1,
+            total:0,
+            pagesSize:5,
+            pagesSizes:[5,10,20,30,40,50],
+            dialogImageUrl: '',
+            dialogVisible: false,
+            form: {
+            "address": "",
+            "market": "",
+            "orderNumber": 0,
+            "phone": "",
+            "picture": "",
+            "provice": ""
             },
-            url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',
-            success:(res, file)=>{
-                me.form.picture = res.result.url;
-            },
-            beforeUpload:(file)=>{
-                var format = file.type.split("/")
-                const isImg =["png","gif","jpeg"].indexOf(format.length&&format[1])>-1;
-                const isLt2M = file.size / 1024 / 1024 < 2;
+            upload:{
+                headers:{
+                    'Content-Type': null
+                    ,'X-Authorization':this.$Token
+                },
+                url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',
+                success:(res, file)=>{
+                    me.form.picture = res.result.url;
+                },
+                beforeUpload:(file)=>{
+                    var format = file.type.split("/")
+                    const isImg =["png","gif","jpeg"].indexOf(format.length&&format[1])>-1;
+                    const isLt2M = file.size / 1024 / 1024 < 2;
 
-                if (!isImg) {
-                me.$message.error(' 图片格式不对!');
+                    if (!isImg) {
+                    me.$message.error(' 图片格式不对!');
+                    }
+                    if (!isLt2M) {
+                    me.$message.error('上传图片大小不能超过 2MB!');
+                    }
+                    return isImg && isLt2M;
+                },
+                remove(){
+                    me.form.picture="";
                 }
-                if (!isLt2M) {
-                me.$message.error('上传图片大小不能超过 2MB!');
-                }
-                return isImg && isLt2M;
-            },
-            remove(){
-                me.form.picture="";
             }
-        }
-        ,pop:{
-            visible:false,
-            item:{},
-            close:(done)=>{
-                done()
-            },
-            confirm:function(){
-                var validate ={
-                    picture:"请上传图片",
-                    phone:{
-                      tip:"请输入手机号",
-                      validate:function(val){
-                          if(!me.$util.RegExp.mobile.test(val)){
-                              this.tip = "手机号格式不正确"
-                              return false
-                          }
-                          return true
-                      }
-                    },
-                    orderNumber:{
-                      tip:"请输入排序号",
-                      validate:function(val){
-                          if(!me.$util.RegExp.number.test(val)){
-                              this.tip = "排序号格式不正确"
-                              return false
-                          }
-                          return true
-                      }
-                    },address:"请输入地址"
-                }
-                var isPass = me.checkData(validate,me.form)
-                if(!isPass||me.load) return
-              
-                var type =false
-                if(me.pop.item.index||me.pop.item.index===0){
-                      me.$set(me.tableData,me.pop.item.index,me.$util.extend({},me.pop.item,me.form))
-                }else{
-                    var addIndex = me.tableData.length
-                    me.tableData.push(me.form)
-                    type =true
-                }
-              
-                var params = type?{}:{id:me.pop.item.id}
-                var url=type?"/saveShop":"/updateShop"
-                me.load = true;
-                me.$request({
-                  url:url,
-                  method:"post",
-                  params:params,
-                  data:me.form
-                }).then(function(re){
-                  if(re){
-                    me.tip('保存成功');
-                  }
-                  me.load = false;
-                },function(){
-                  me.tip('保存失败','warning');
-                  me.load = false;
-                })
+            ,pop:{
+                visible:false,
+                item:{},
+                close:(done)=>{
+                    done()
+                },
+                confirm:function(){
+                    var validate ={
+                        picture:"请上传图片",
+                        phone:{
+                        tip:"请输入手机号",
+                        validate:function(val){
+                            if(!me.$util.RegExp.mobile.test(val)){
+                                this.tip = "手机号格式不正确"
+                                return false
+                            }
+                            return true
+                        }
+                        },
+                        orderNumber:{
+                        tip:"请输入排序号",
+                        validate:function(val){
+                            if(!me.$util.RegExp.number.test(val)){
+                                this.tip = "排序号格式不正确"
+                                return false
+                            }
+                            return true
+                        }
+                        },address:"请输入地址"
+                    }
+                    var isPass = me.checkData(validate,me.form)
+                    if(!isPass||me.load) return
                 
-                me.pop.visible =false;
+                    var type =false
+                    if(me.pop.item.index||me.pop.item.index===0){
+                        me.$set(me.tableData,me.pop.item.index,me.$util.extend({},me.pop.item,me.form))
+                    }else{
+                        var addIndex = me.tableData.length
+                        me.tableData.push(me.form)
+                        type =true
+                    }
+                
+                    var params = type?{}:{id:me.pop.item.id}
+                    var url=type?"/saveShop":"/updateShop"
+                    me.load = true;
+                    me.$request({
+                    url:url,
+                    method:"post",
+                    params:params,
+                    data:me.form
+                    }).then(function(re){
+                    if(re){
+                        me.tip('保存成功');
+                    }
+                    me.load = false;
+                    },function(){
+                    me.tip('保存失败','warning');
+                    me.load = false;
+                    })
+                    
+                    me.pop.visible =false;
 
+                }
             }
         }
-      }
     },
     created:function(){
-      this.getData(this.currentPage,this.pagesSize);
+        this.getData(this.currentPage,this.pagesSize);
     },
     methods: {
-      getData(pageNo,pageSize){
-        var me = this;
-        this.$request({
-            url:"/getShopList",
-            method:"get",
-            query:{
-              pageNo:pageNo,
-              pageSize:pageSize
+        getData(pageNo,pageSize){
+            var me = this;
+            this.$request({
+                url:"/getShopList",
+                method:"get",
+                query:{
+                pageNo:pageNo,
+                pageSize:pageSize
+                }
+            }).then(function(re){
+                me.tableData = re.items;
+                me.currentPage = re.pageNo;
+                me.pagesSize = re.pageSize;
+                me.total = re.total;
+            })
+        },
+        handleSizeChange(val) {
+            this.getData(this.currentPage,val);
+        },
+        handleCurrentChange(val) {
+            this.getData(val,this.pagesSize);
+        },
+        checkData(validate,datas){
+            var me =this;
+            var tip;
+            for(var key in validate){
+                if(!tip){
+                    if(me.$util.isObject(validate[key])){
+                        if(!datas[key]||!validate[key].validate(datas[key],datas)){
+                            tip=validate[key].tip;
+                        }
+                    }else{
+                        if(!datas[key]){
+                            tip=validate[key];
+                        } 
+                    }
+                }  
             }
-        }).then(function(re){
-            me.tableData = re.items;
-            me.currentPage = re.pageNo;
-            me.pagesSize = re.pageSize;
-            me.total = re.total;
-        })
-      },
-      handleSizeChange(val) {
-        this.getData(this.currentPage,val);
-      },
-      handleCurrentChange(val) {
-        this.getData(val,this.pagesSize);
-      },
-      checkData(validate,datas){
-          var me =this;
-          var tip;
-          for(var key in validate){
-              if(!tip){
-                  if(me.$util.isObject(validate[key])){
-                      if(!datas[key]||!validate[key].validate(datas[key],datas)){
-                          tip=validate[key].tip;
-                      }
-                  }else{
-                      if(!datas[key]){
-                          tip=validate[key];
-                      } 
-                  }
-              }  
-          }
-          if(tip){
-            me.tip( tip,'warning');
-            return false
-          }
-          return true
-      }
-      ,add(scope){
-        this.pop.visible = true;
-        this.pop.title =  scope?"编辑门店":"新增门店";
-        if(scope){
-            scope.row.index = scope.$index;
-            var row = scope.row
-            this.pop.item = row;
-            this.form ={
-              "address": row.address||"",
-              "market": row.market||"",
-              "orderNumber": row.orderNumber||0,
-              "phone": row.phone||"",
-              "picture": row.picture||"",
-              "provice": row.provice||""
+            if(tip){
+                me.tip( tip,'warning');
+                return false
             }
-        }else{
-            this.form ={
-              "address": "",
-              "market": "",
-              "orderNumber": 0,
-              "phone": "",
-              "picture": "",
-              "provice": ""
-            }
+            return true
         }
-      },
-      tip(title,type,duration){
-        this.$notify({
-            title: title || '',
-            type: type||'success',
-            duration:duration||1000
-        });
+        ,add(scope){
+            this.pop.visible = true;
+            this.pop.title =  scope?"编辑门店":"新增门店";
+            if(scope){
+                scope.row.index = scope.$index;
+                var row = scope.row
+                this.pop.item = row;
+                this.form ={
+                "address": row.address||"",
+                "market": row.market||"",
+                "orderNumber": row.orderNumber||0,
+                "phone": row.phone||"",
+                "picture": row.picture||"",
+                "provice": row.provice||""
+                }
+            }else{
+                this.form ={
+                "address": "",
+                "market": "",
+                "orderNumber": 0,
+                "phone": "",
+                "picture": "",
+                "provice": ""
+                }
+            }
+        },
+        tip(title,type,duration){
+            this.$notify({
+                title: title || '',
+                type: type||'success',
+                duration:duration||1000
+            });
 
-      }
+        },
+        deleteStore(scope){
+            this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消'
+            }).then(() => {
+                var me = this;
+                var params={}
+                params.id = scope.row.id
+                if(me.loadDelete)return
+                me.loadDelete = true;
+                me.$request({
+                    url:"/deleteStore",
+                    method:"delete",
+                    params:params,
+                    data:{}
+                }).then(function(re){
+                    me.loadDelete = false;
+                    me.tip( '删除成功!');
+                    me.getData(me.currentPage,me.pagesSize);
+                },function(){
+                    me.loadDelete = false;
+                })
+            }).catch(() => {
+
+            });
+        }
     }
   }
 </script>
