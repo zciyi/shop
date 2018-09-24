@@ -123,7 +123,7 @@
                         <i v-if="form.clickPicture" @click="upload.remove('clickPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                     </div>
                 </el-form-item>
-                <el-form-item label="跳转链接" v-show="form.clickType===2" required>
+                <el-form-item label="跳转链接" v-show="form.clickType===2">
                     <el-input v-model="form.clickLink" placeholder="请输入跳转链接"></el-input>
                 </el-form-item>
             </el-form>
@@ -217,15 +217,9 @@ import './bottom.less'
                     if(me.form.clickType===1){
                         validate.clickPicture="请上传图片";
                     }else{
-                        validate.clickLink={
-                            tip:"请输入跳转链接",
-                            validate:function(val,row){
-                                if(!me.$util.RegExp.url.test(val)){
-                                    this.tip = "跳转链接格式不正确"
-                                    return false
-                                }
-                                return true
-                            }
+                        if(me.form.clickLink&&!me.$util.RegExp.url.test(me.form.clickLink)){
+                            me.tip('跳转链接格式不正确','warning')
+                            return
                         }
                     }
                     var tip = me.checkData(validate,me.form)

@@ -113,7 +113,7 @@
                 <el-form-item label="视频链接" v-show="form.medias.mediaType===2" required>
                     <el-input v-model="form.medias.video" placeholder="请输入视频链接"></el-input>
                 </el-form-item>
-                <el-form-item label="跳转链接" v-show="form.medias.mediaType===1"  required>
+                <el-form-item label="跳转链接" v-show="form.medias.mediaType===1" >
                     <el-input v-model="form.medias.link" placeholder="请输入跳转链接"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="位置" class="radio" required>
@@ -197,15 +197,9 @@ import './edit.less'
                         validate.video="请输入视频链接"
                     }else{
                         validate.picture = "请上传图片"
-                        validate.link={
-                            tip:"请输入跳转链接",
-                            validate:function(val){
-                                if(!me.$util.RegExp.url.test(val)){
-                                    this.tip = "跳转链接格式不正确"
-                                    return false
-                                }
-                                return true
-                            }
+                        if(me.form.medias.link&&!me.$util.RegExp.url.test(me.form.medias.link)){
+                            me.tip('跳转链接格式不正确','warning')
+                            return
                         }
                     }
                     var tip = me.checkData(validate,me.form.medias)

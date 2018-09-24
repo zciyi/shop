@@ -128,7 +128,7 @@
                             <i v-if="form.bar&&form.bar.picture" @click="upload.remove('picture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
-                    <el-form-item label="跳转链接" required>
+                    <el-form-item label="跳转链接" >
                         <el-input v-model="form.bar.link" placeholder="请输入跳转链接"></el-input>
                     </el-form-item>
                 </el-form>
@@ -165,10 +165,10 @@
                             <i v-if="form.pic&&form.pic.leftPicture" @click="upload.remove('leftPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
-                    <el-form-item label="左视频链接" v-show="form.pic&&form.pic.leftMediaType===2" required>
+                    <el-form-item label="左视频链接" v-show="form.pic&&form.pic.leftMediaType===2" >
                         <el-input v-model="form.pic.leftVideo" placeholder="请输入视频链接"></el-input>
                     </el-form-item>
-                    <el-form-item label="左跳转链接" v-show="form.pic&&form.pic.leftMediaType===1" required>
+                    <el-form-item label="左跳转链接" v-show="form.pic&&form.pic.leftMediaType===1">
                         <el-input v-model="form.pic.leftLink" placeholder="请输入跳转链接"></el-input>
                     </el-form-item>
                     <el-form-item label="右类型" class="radio" required>
@@ -198,7 +198,7 @@
                     <el-form-item label="右视频链接" v-show="form.pic&&form.pic.rightMediaType===2" required>
                         <el-input v-model="form.pic.rightVideo" placeholder="请输入视频链接"></el-input>
                     </el-form-item>
-                    <el-form-item label="右跳转链接" v-show="form.pic&&form.pic.rightMediaType===1" required>
+                    <el-form-item label="右跳转链接" v-show="form.pic&&form.pic.rightMediaType===1">
                         <el-input v-model="form.pic.rightLink" placeholder="请输入跳转链接"></el-input>
                     </el-form-item>
                 </el-form>
@@ -296,15 +296,9 @@ import './home.less'
                         case "bar":
                             type = "broadcasts";
                             validate.picture = "请上传图片";
-                            validate.link = {
-                            tip:"请输入跳转链接",
-                                validate:function(val){
-                                    if(!me.$util.RegExp.url.test(val)){
-                                        this.tip = "跳转链接格式不正确"
-                                        return false
-                                    }
-                                    return true
-                                }
+                            if(me.form[me.pop.type].link&&!me.$util.RegExp.url.test(me.form[me.pop.type].link)){
+                                    me.tip('跳转链接格式不正确','warning')
+                                    return
                             }
                             break
                         case "pic":
@@ -313,30 +307,18 @@ import './home.less'
                                 validate.leftVideo="请输入左视频链接"
                             }else{
                                 validate.leftPicture = "请上传左图片"
-                                validate.leftLink={
-                                    tip:"请输左入跳转链接",
-                                    validate:function(val){
-                                        if(!me.$util.RegExp.url.test(val)){
-                                            this.tip = "跳转链接格式不正确"
-                                            return false
-                                        }
-                                        return true
-                                    }
+                                if(me.form[me.pop.type].leftLink&&!me.$util.RegExp.url.test(me.form[me.pop.type].leftLink)){
+                                     me.tip('跳转链接格式不正确','warning')
+                                     return
                                 }
                             }
                             if(me.form.pic.rightMediaType===2){
                                 validate.rightVideo="请输入右视频链接"
                             }else{
                                 validate.rightPicture = "请上传右图片"
-                                validate.rightLink={
-                                    tip:"请输入右跳转链接",
-                                    validate:function(val){
-                                        if(!me.$util.RegExp.url.test(val)){
-                                            this.tip = "跳转链接格式不正确"
-                                            return false
-                                        }
-                                        return true
-                                    }
+                                if(me.form[me.pop.type].rightLink&&!me.$util.RegExp.url.test(me.form[me.pop.type].rightLink)){
+                                     me.tip('跳转链接格式不正确','warning')
+                                     return
                                 }
                             }
                             break
@@ -452,10 +434,7 @@ import './home.less'
         ,onSubmit(){
             var me = this;
             if(this.activeName==='pic'){
-                if(!this.form.base.backgroundColor){
-                    this.tip("请设置色值","warning")
-                    return
-                }else if(!this.broadcasts.length){
+                if(!this.broadcasts.length){
                     this.tip("请添加轮播图","warning")
                     return
                 }else if(!this.catalogs.length){

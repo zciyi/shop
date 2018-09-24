@@ -47,7 +47,7 @@
                         :on-success="upload.success"
                         :before-upload="upload.beforeUpload"
                         :headers="upload.headers"
-                        v-if="!form.bar.picture"
+                        v-if="!form.bar.picture&&upload.headers"
                         >
                         <i class="el-icon-plus pic-uploader-icon"></i>
                         </el-upload>
@@ -56,7 +56,7 @@
                             <i v-if="form.bar&&form.bar.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
-                    <el-form-item label="跳转链接" required>
+                    <el-form-item label="跳转链接" >
                         <el-input v-model="form.bar.link" placeholder="请输入跳转链接"></el-input>
                     </el-form-item>
                 </el-form>
@@ -130,19 +130,13 @@ import './collection.less'
                 },
                 confirm:function(){
                     var validate ={
-                        picture:"请上传图片",
-                        link:{
-                            tip:"请输入跳转链接",
-                            validate:function(val){
-                                if(!me.$util.RegExp.url.test(val)){
-                                    this.tip = "跳转链接格式不正确"
-                                    return false
-                                }
-                                return true
-                            }
-                        }
+                        picture:"请上传图片"
                     }
                     var tip = me.checkData(validate,me.form.bar)
+                    if(me.form.bar.link&&!me.$util.RegExp.url.test(me.form.bar.link)){
+                        me.tip('跳转链接格式不正确','warning')
+                        return
+                    }
                     if(!tip){
                         return false
                     }
