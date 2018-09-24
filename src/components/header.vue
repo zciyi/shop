@@ -1,6 +1,6 @@
 <template>
   <div class="M-header">
-    {{msg}}
+    <span class="M-headerCon">{{msg}}</span>
   </div>
 </template>
 
@@ -20,5 +20,12 @@ export default {
   height: 50px;
   line-height: 50px;
   color: #fff;
+  text-align: left;
+  
 }
+.M-headerCon{
+    display: inline-block;
+    text-align: center;
+    min-width: 160px;
+  }
 </style>
