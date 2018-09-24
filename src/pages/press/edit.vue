@@ -23,7 +23,9 @@
                 <i class="el-icon-plus pic-uploader-icon"></i>
                 </el-upload>
                 <div class="pic">
-                    <img v-if="form.base.picture" @click="handlePictureCardPreview(form.base.picture)"  :src="form.base.picture" >
+                    <div class="picImg">
+                        <img v-if="form.base.picture" @click="handlePictureCardPreview(form.base.picture)"  :src="form.base.picture" >
+                    </div>
                     <i v-if="form.base.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
                 </div>
             </el-form-item>
@@ -106,7 +108,9 @@
                     <i class="el-icon-plus pic-uploader-icon"></i>
                     </el-upload>
                     <div class="pic">
-                        <img v-if="form.medias.picture" @click="handlePictureCardPreview(form.medias.picture)"  :src="form.medias.picture" >
+                        <div class="picImg">
+                            <img v-if="form.medias.picture" @click="handlePictureCardPreview(form.medias.picture)"  :src="form.medias.picture" >
+                        </div>
                         <i v-if="form.medias.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
                     </div>
                 </el-form-item>

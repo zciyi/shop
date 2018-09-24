@@ -52,7 +52,9 @@
                         <i class="el-icon-plus pic-uploader-icon"></i>
                         </el-upload>
                         <div class="pic">
-                            <img v-if="form.bar&&form.bar.picture" @click="handlePictureCardPreview(form.bar.picture)"  :src="form.bar.picture" >
+                            <div class="picImg">
+                                <img v-if="form.bar&&form.bar.picture" @click="handlePictureCardPreview(form.bar.picture)"  :src="form.bar.picture" >
+                            </div>
                             <i v-if="form.bar&&form.bar.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>

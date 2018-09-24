@@ -124,7 +124,9 @@
                         <i class="el-icon-plus pic-uploader-icon"></i>
                         </el-upload>
                         <div class="pic">
-                            <img v-if="form.bar&&form.bar.picture" @click="handlePictureCardPreview(form.bar.picture)"  :src="form.bar.picture" >
+                            <div class="picImg">
+                                <img v-if="form.bar&&form.bar.picture" @click="handlePictureCardPreview(form.bar.picture)"  :src="form.bar.picture" >
+                            </div>
                             <i v-if="form.bar&&form.bar.picture" @click="upload.remove('picture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
@@ -161,7 +163,9 @@
                             </el-upload>
                         </div>
                         <div class="pic">
-                            <img v-if="form.pic&&form.pic.leftPicture" @click="handlePictureCardPreview(form.pic.leftPicture)"  :src="form.pic.leftPicture" >
+                            <div class="picImg">
+                                <img v-if="form.pic&&form.pic.leftPicture" @click="handlePictureCardPreview(form.pic.leftPicture)"  :src="form.pic.leftPicture" >
+                            </div>
                             <i v-if="form.pic&&form.pic.leftPicture" @click="upload.remove('leftPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
@@ -191,7 +195,9 @@
                             </el-upload>
                         </div>
                         <div class="pic">
-                            <img v-if="form.pic&&form.pic.rightPicture" @click="handlePictureCardPreview(form.pic.rightPicture)"  :src="form.pic.rightPicture" >
+                            <div  class="picImg">
+                                <img v-if="form.pic&&form.pic.rightPicture" @click="handlePictureCardPreview(form.pic.rightPicture)"  :src="form.pic.rightPicture" >
+                            </div>
                             <i v-if="form.pic&&form.pic.rightPicture" @click="upload.remove('rightPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>

@@ -92,7 +92,9 @@
                         </el-upload>
                     </div>
                     <div class="pic">
-                        <img v-if="form.icon" @click="handlePictureCardPreview(form.icon)"  :src="form.icon" >
+                        <div class="picImg">
+                            <img v-if="form.icon" @click="handlePictureCardPreview(form.icon)"  :src="form.icon" >
+                        </div>
                         <i v-if="form.icon" @click="upload.remove('icon')" class="el-icon-close pic-uploader-icon picIcon"></i>
                     </div>
                 </el-form-item>
@@ -119,7 +121,9 @@
                         </el-upload>
                     </div>
                     <div class="pic">
-                        <img v-if="form.clickPicture" @click="handlePictureCardPreview(form.clickPicture)"  :src="form.clickPicture" >
+                        <div class="picImg">
+                            <img v-if="form.clickPicture" @click="handlePictureCardPreview(form.clickPicture)"  :src="form.clickPicture" >
+                        </div>
                         <i v-if="form.clickPicture" @click="upload.remove('clickPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                     </div>
                 </el-form-item>
