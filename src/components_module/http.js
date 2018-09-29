@@ -270,6 +270,7 @@ var ajxa = function (Vue, options) {
     Vue.prototype.$request = request;
     Vue.prototype.$util = util;
     Vue.prototype.$config = config;
+    Vue.prototype.$Token = Token;
     
    
 }
