@@ -147,6 +147,8 @@ var ajxa = function (Vue, options) {
                         if(value.token){
                             Token = value.token;
                             localStorage.setItem("_SHOP_PASS_IN_TOKEN",Token)
+                            Vue.prototype.$Token = Token;
+                            
                         }
 
                         if (value && value.code===0) {
@@ -268,7 +270,6 @@ var ajxa = function (Vue, options) {
     Vue.prototype.$request = request;
     Vue.prototype.$util = util;
     Vue.prototype.$config = config;
-    Vue.prototype.$Token = Token;
     
    
 }
