@@ -9,7 +9,7 @@
                 <el-input v-model="form.base.title" placeholder="请输入标题"></el-input>
             </el-form-item>
             <el-form-item label="标题颜色设置">
-                <el-color-picker v-model="form.base.backgroundColor" show-alpha></el-color-picker>
+                <el-color-picker v-model="form.base.titleColor" show-alpha></el-color-picker>
             </el-form-item>
             <el-form-item label="图片" required>
                 <el-upload
@@ -147,7 +147,7 @@ import './edit.less'
       return {
             form:{
                 base:{
-                    backgroundColor:"rgba(225, 225, 225, 1)",
+                    titleColor:"rgba(225, 225, 225, 1)",
                     picture:""
                     ,link:""
                 },
@@ -239,7 +239,7 @@ import './edit.less'
                     id:this.$route.query.id
                 }
             }).then(function(re){
-                me.form.base.backgroundColor = re.backgroundColor;
+                me.form.base.titleColor = re.titleColor;
                 me.form.base.title = re.title;
                 me.form.base.picture = re.picture;
                 me.medias = re.medias;
@@ -334,7 +334,7 @@ import './edit.less'
                     method:"post",
                     params:params,
                     data:{
-                        backgroundColor:this.form.base.backgroundColor,
+                        titleColor:this.form.base.titleColor,
                         title:this.form.base.title,
                         picture:this.form.base.picture,
                         medias:this.medias
