@@ -9,13 +9,22 @@
             label="ip">
             </el-table-column>
             <el-table-column
-            prop="requestName"
-            label="请求名称">
+            prop="pageName"
+            label="页面">
             </el-table-column>
             <el-table-column
-            prop="requestUrl"
-            label="请求路径">
+            prop="productName"
+            label="商品">
             </el-table-column>
+            <el-table-column
+                prop="createTime"
+                label="创建时间">
+                <template slot-scope="scope">
+                {{scope.row.createTime|timeStr}}
+                </template>
+                
+            </el-table-column>
+
         </el-table>
         <div class="pagination">
         <el-pagination
@@ -74,7 +83,6 @@ import './ip.less'
         handleCurrentChange(val) {
             this.getData(val,this.pagesSize);
         }
-        
     }
   }
 </script>
