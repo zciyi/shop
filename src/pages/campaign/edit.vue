@@ -115,7 +115,15 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="视频链接" v-show="form.medias.mediaType===2" required>
-                    <el-input v-model="form.medias.video" placeholder="请输入视频链接"></el-input>
+                    <el-input v-model="form.medias.video" placeholder="请上传视频链接" disabled></el-input>
+                    <el-upload
+                        :action="video.url"
+                        :headers="upload.headers"
+                        :on-success="video.success"
+                        :show-file-list="false">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                    </el-upload>
+
                 </el-form-item>
                 <el-form-item label="跳转链接" v-show="form.medias.mediaType===1" >
                     <el-input v-model="form.medias.link" placeholder="请输入跳转链接"></el-input>
@@ -163,6 +171,15 @@ import './edit.less'
             activeName:"base",
             dialogImageUrl: '',
             dialogVisible: false,
+            video:{
+                src:[],
+                url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFileVideo"]||'',
+                success:(res, file)=>{
+                    this.tip('上传成功');
+                    this.src=file;
+                    this.form.medias.video=res.result.url;
+                }
+            },
             upload:{
                 headers:{
                     'Content-Type': null
@@ -175,13 +192,13 @@ import './edit.less'
                 beforeUpload:(file)=>{
                     var format = file.type.split("/")
                     const isImg =["png","gif","jpeg"].indexOf(format.length&&format[1])>-1;
-                    const isLt2M = file.size / 1024 / 1024 < 2;
+                    const isLt2M = file.size / 1024 / 1024 < 10;
 
                     if (!isImg) {
                     me.$message.error(' 图片格式不对!');
                     }
                     if (!isLt2M) {
-                    me.$message.error('上传图片大小不能超过 2MB!');
+                    me.$message.error('上传图片大小不能超过 10MB!');
                     }
                     return isImg && isLt2M;
                 },
@@ -198,7 +215,7 @@ import './edit.less'
                 confirm:function(){
                     var validate ={}
                     if(me.form.medias.mediaType===2){
-                        validate.video="请输入视频链接"
+                        validate.video="请上传视频链接"
                     }else{
                         validate.picture = "请上传图片"
                         if(me.form.medias.link&&!me.$util.RegExp.url.test(me.form.medias.link)){

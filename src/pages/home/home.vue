@@ -170,7 +170,16 @@
                         </div>
                     </el-form-item>
                     <el-form-item label="左视频链接" v-show="form.pic&&form.pic.leftMediaType===2" >
-                        <el-input v-model="form.pic.leftVideo" placeholder="请输入视频链接"></el-input>
+                        <el-input v-model="form.pic.leftVideo" placeholder="请上传视频链接" disabled></el-input>
+                        <div @click="video.setType('leftVideo')">
+                            <el-upload
+                                :action="video.url"
+                                :headers="upload.headers"
+                                :on-success="video.success"
+                                :show-file-list="false">
+                                <el-button size="small" type="primary">点击上传</el-button>
+                            </el-upload>
+                        </div>
                     </el-form-item>
                     <el-form-item label="左跳转链接" v-show="form.pic&&form.pic.leftMediaType===1">
                         <el-input v-model="form.pic.leftLink" placeholder="请输入跳转链接"></el-input>
@@ -202,7 +211,16 @@
                         </div>
                     </el-form-item>
                     <el-form-item label="右视频链接" v-show="form.pic&&form.pic.rightMediaType===2" required>
-                        <el-input v-model="form.pic.rightVideo" placeholder="请输入视频链接"></el-input>
+                        <el-input v-model="form.pic.rightVideo" placeholder="请上传视频链接" disabled></el-input>
+                        <div @click="video.setType('rightVideo')">
+                            <el-upload
+                                :action="video.url"
+                                :headers="upload.headers"
+                                :on-success="video.success"
+                                :show-file-list="false">
+                                <el-button size="small" type="primary">点击上传</el-button>
+                            </el-upload>
+                        </div>
                     </el-form-item>
                     <el-form-item label="右跳转链接" v-show="form.pic&&form.pic.rightMediaType===1">
                         <el-input v-model="form.pic.rightLink" placeholder="请输入跳转链接"></el-input>
@@ -255,6 +273,19 @@ import './home.less'
                     "rightVideo": ""
                 }
 
+            },
+            videoUpload:'',
+            video:{
+                src:[],
+                url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFileVideo"]||'',
+                success:(res, file)=>{
+                    this.tip('上传成功');
+                    this.src=file
+                    this.form[me.pop.type][me.videoUpload]=res.result.url;
+                },
+                setType(key){
+                    me.videoUpload=key;
+                }
             },
             typeUpload:"",
             upload:{
@@ -310,7 +341,7 @@ import './home.less'
                         case "pic":
                             type = "catalogs";
                             if(me.form.pic.leftMediaType===2){
-                                validate.leftVideo="请输入左视频链接"
+                                validate.leftVideo="请上传左视频链接"
                             }else{
                                 validate.leftPicture = "请上传左图片"
                                 if(me.form[me.pop.type].leftLink&&!me.$util.RegExp.url.test(me.form[me.pop.type].leftLink)){
@@ -319,7 +350,7 @@ import './home.less'
                                 }
                             }
                             if(me.form.pic.rightMediaType===2){
-                                validate.rightVideo="请输入右视频链接"
+                                validate.rightVideo="请上传右视频链接"
                             }else{
                                 validate.rightPicture = "请上传右图片"
                                 if(me.form[me.pop.type].rightLink&&!me.$util.RegExp.url.test(me.form[me.pop.type].rightLink)){
