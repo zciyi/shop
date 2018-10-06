@@ -12,7 +12,7 @@
             prop="backgroundColor"
             label="色值">
                 <template slot-scope="scope">
-                    <div class="colorS">
+                    <div class="colorS"  style="text-align:left;">
                         <div class="colorShow" :style="{background:scope.row.backgroundColor}"></div>
                         {{scope.row.backgroundColor}}
                     </div>
