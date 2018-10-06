@@ -158,9 +158,9 @@ var ajxa = function (Vue, options) {
                             if(config.autoNotify){
                                 if (err_code) {
                                     // 错误提示
-                                    var tipTxt = err_code[value.code];
+                                    var tipTxt = err_code[value.code]||value.message;
                                     if (tipTxt) {
-                                        Vue.$notify({
+                                        Vue.prototype.$notify({
                                             title: tipTxt || '',
                                             type: 'warning',
                                             duration:1000

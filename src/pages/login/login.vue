@@ -34,6 +34,18 @@ export default {
   },
   beforeCreate(){
   },
+  mounted(){
+    var me = this
+    document.onkeyup = function (e) {  
+      if (window.event) e = window.event;    
+      var code = e.charCode || e.keyCode;    
+      if (code == 13&&me.form.name&&me.form.pws) {    
+        me.onSubmit();  
+      }
+    }
+
+
+  },
   methods:{
     onSubmit(){
       var me = this;
