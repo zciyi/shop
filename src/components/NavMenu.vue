@@ -24,9 +24,6 @@ import './NavMenu.less'
             text:"HOME",
             path:"/home"
           },{
-              text:"BOTTOM",
-              path:"/bottom",
-          },{
             text:"CAMPAIGN",
             path:"/campaign"
           },{
@@ -50,6 +47,9 @@ import './NavMenu.less'
           },{
             text:"MENU",
             path:"/menu",
+          },{
+              text:"底部管理",
+              path:"/bottom",
           },{
             text:"IP",
             path:"/ip",

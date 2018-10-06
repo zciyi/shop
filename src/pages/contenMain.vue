@@ -68,7 +68,7 @@ export default {
         text:"HOME",
         path:"/home"
       },{
-        text:"BOTTOM",
+        text:"底部管理",
         path:"/bottom"
       },{
         text:"MENU",
@@ -83,7 +83,7 @@ export default {
           }
         ]
       },{
-        text:"SHOP",
+        text:"STORE",
         path:"/shop"
       },{
         text:"PRESS列表",

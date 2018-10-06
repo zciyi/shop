@@ -295,7 +295,7 @@ import './bottom.less'
         }
         ,add(scope){
             this.pop.visible = true;
-            this.pop.title =  scope?"编辑bottom":"新增bottom";
+            this.pop.title =  scope?"编辑底部":"新增底部";
             if(scope){
                 scope.row.index = scope.$index;
                 var row = scope.row
