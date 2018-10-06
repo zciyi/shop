@@ -45,5 +45,7 @@ export default {
   color:#fff;
   right:20px;
   top:0;
+  cursor: pointer;
+  
 }
 </style>

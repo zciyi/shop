@@ -89,10 +89,10 @@ import './ip.less'
             })
         },
         handleSizeChange(val) {
-            this.getData(this.currentPage,val);
+            this.getData(this.currentPage,val,this.search);
         },
         handleCurrentChange(val) {
-            this.getData(val,this.pagesSize);
+            this.getData(val,this.pagesSize,this.search);
         },
         searchData(){
             this.currentPage =1;
