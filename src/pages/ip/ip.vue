@@ -78,8 +78,8 @@ import './ip.less'
                 query:{
                 pageNo:pageNo,
                 pageSize:pageSize,
-                pageName:(qr&&qr.pageName) ||'',
-                productName:(qr&&qr.productName)||''
+                pageName:(qr&&qr.pageName.trim()) ||'',
+                productName:(qr&&qr.productName.trim())||''
                 }
             }).then(function(re){
                 me.tableData = re.items;
