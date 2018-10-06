@@ -1,5 +1,10 @@
 <template>
     <div class="P-ip">
+        <div class="M-search">
+            <el-input v-model="search.pageName" placeholder="页面"></el-input>
+            <el-input v-model="search.productName" placeholder="商品"></el-input>
+            <el-button  type="primary" size="large" class="M-Btn" @click="searchData">搜索</el-button>
+        </div>
         <el-table
         :data="tableData"
         border
@@ -55,20 +60,26 @@ import './ip.less'
         total:0,
         pagesSize:5,
         pagesSizes:[5,10,20,30,40,50],
+        search:{
+            pageName:"",
+            productName:""
+        }
       }
     },
     created:function(){
       this.getData(this.currentPage,this.pagesSize);
     },
     methods: {
-        getData(pageNo,pageSize){
+        getData(pageNo,pageSize,qr){
             var me = this;
             this.$request({
                 url:"/getIpAddress",
                 method:"get",
                 query:{
                 pageNo:pageNo,
-                pageSize:pageSize
+                pageSize:pageSize,
+                pageName:(qr&&qr.pageName) ||'',
+                productName:(qr&&qr.productName)||''
                 }
             }).then(function(re){
                 me.tableData = re.items;
@@ -82,6 +93,10 @@ import './ip.less'
         },
         handleCurrentChange(val) {
             this.getData(val,this.pagesSize);
+        },
+        searchData(){
+            this.currentPage =1;
+            this.getData(1,this.pagesSize,this.search);
         }
     }
   }
