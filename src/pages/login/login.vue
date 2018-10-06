@@ -56,6 +56,10 @@ export default {
         me.tip("请输入密码","warning")
         return false
       }
+      if(me.load){
+        return
+      }
+      me.load = true;
       this.$request({
           url:"/login",
           method:"post",

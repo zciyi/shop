@@ -33,13 +33,13 @@ import './NavMenu.less'
             text:"COLLECTION",
             path:"/collection"
           },{
-            text:"E_SHOP",
+            text:"E-SHOP",
             path:"/eshop"
           },{
             text:"PROJECT",
             path:"/project"
           },{
-            text:"SHOP",
+            text:"STORE",
             path:"/shop"
           },{
             text:"PRESS",
