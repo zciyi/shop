@@ -115,7 +115,7 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="视频链接" v-show="form.medias.mediaType===2" required>
-                    <el-input v-model="form.medias.video" placeholder="请上传视频链接" disabled></el-input>
+                    <el-input v-model="form.medias.video" placeholder="请上传视频链接" ></el-input>
                     <el-upload
                         :action="video.url"
                         :headers="upload.headers"

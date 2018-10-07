@@ -65,8 +65,8 @@
               <el-form-item label="排序号" required>
                   <el-input v-model="form.orderNumber" placeholder="请输入排序号"></el-input>
               </el-form-item>
-              <el-form-item label="手机号" required>
-                  <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>
+              <el-form-item label="号码" required>
+                  <el-input v-model="form.phone" placeholder="请输入号码"></el-input>
               </el-form-item>
               <el-form-item label="省份">
                   <el-input v-model="form.provice" placeholder="请输入省份"></el-input>
@@ -163,16 +163,7 @@ import './shop.less'
                 confirm:function(){
                     var validate ={
                         picture:"请上传图片",
-                        phone:{
-                        tip:"请输入手机号",
-                        validate:function(val){
-                            if(!me.$util.RegExp.mobile.test(val)){
-                                this.tip = "手机号格式不正确"
-                                return false
-                            }
-                            return true
-                        }
-                        },
+                        phone:"请输入号码",
                         orderNumber:{
                         tip:"请输入排序号",
                         validate:function(val){
@@ -303,7 +294,7 @@ import './shop.less'
 
         },
         deleteStore(scope){
-            this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+            this.$confirm('此操作将删除该门店, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消'
             }).then(() => {

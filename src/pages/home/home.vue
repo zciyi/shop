@@ -170,7 +170,7 @@
                         </div>
                     </el-form-item>
                     <el-form-item label="左视频链接" v-show="form.pic&&form.pic.leftMediaType===2" >
-                        <el-input v-model="form.pic.leftVideo" placeholder="请上传视频链接" disabled></el-input>
+                        <el-input v-model="form.pic.leftVideo" placeholder="请上传视频链接" ></el-input>
                         <div @click="video.setType('leftVideo')">
                             <el-upload
                                 :action="video.url"
@@ -211,7 +211,7 @@
                         </div>
                     </el-form-item>
                     <el-form-item label="右视频链接" v-show="form.pic&&form.pic.rightMediaType===2" required>
-                        <el-input v-model="form.pic.rightVideo" placeholder="请上传视频链接" disabled></el-input>
+                        <el-input v-model="form.pic.rightVideo" placeholder="请上传视频链接" ></el-input>
                         <div @click="video.setType('rightVideo')">
                             <el-upload
                                 :action="video.url"
