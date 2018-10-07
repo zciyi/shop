@@ -243,7 +243,7 @@ import './shop.less'
             for(var key in validate){
                 if(!tip){
                     if(me.$util.isObject(validate[key])){
-                        if(!datas[key]||!validate[key].validate(datas[key],datas)){
+                        if((!datas[key]&&datas[key]!=0)||!validate[key].validate(datas[key],datas)){
                             tip=validate[key].tip;
                         }
                     }else{
@@ -275,6 +275,7 @@ import './shop.less'
                 "provice": row.provice||""
                 }
             }else{
+                this.pop.item={}
                 this.form ={
                 "address": "",
                 "market": "",
