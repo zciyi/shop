@@ -140,13 +140,13 @@ import './shop.less'
                 beforeUpload:(file)=>{
                     var format = file.type.split("/")
                     const isImg =["png","gif","jpeg"].indexOf(format.length&&format[1])>-1;
-                    const isLt2M = file.size / 1024 / 1024 < 2;
+                    const isLt2M = file.size / 1024 / 1024 < 10;
 
                     if (!isImg) {
                     me.$message.error(' 图片格式不对!');
                     }
                     if (!isLt2M) {
-                    me.$message.error('上传图片大小不能超过 2MB!');
+                    me.$message.error('上传图片大小不能超过 10MB!');
                     }
                     return isImg && isLt2M;
                 },
