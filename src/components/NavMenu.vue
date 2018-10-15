@@ -45,13 +45,13 @@ import './NavMenu.less'
             text:"ABOUT CARSYDA",
             path:"/about"
           },{
-            text:"MENU",
+            text:"菜单管理",
             path:"/menu",
           },{
               text:"底部管理",
               path:"/bottom",
           },{
-            text:"IP",
+            text:"访问记录",
             path:"/ip",
           }]
           ,activeName:this.$route.path||"/home"

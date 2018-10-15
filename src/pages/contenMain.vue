@@ -71,10 +71,10 @@ export default {
         text:"底部管理",
         path:"/bottom"
       },{
-        text:"MENU",
+        text:"菜单管理",
         path:"/menu"
       },{
-        text:"CAMPAIN列表",
+        text:"CAMPAIGN列表",
         path:"/campaign"
         ,hasSubNav:true
         ,subNav:[{
@@ -116,7 +116,7 @@ export default {
         text:"E-SHOP",
         path:"/eshop"
       },{
-        text:"IP",
+        text:"访问记录",
         path:"/ip"
       }]
       this.forItem(breadcrumb,val,cur,[])
