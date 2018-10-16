@@ -365,7 +365,7 @@ import './bottom.less'
             this.dialogVisible = true;
         }
         ,deleteBottom(scope){
-            this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+            this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消'
             }).then(() => {

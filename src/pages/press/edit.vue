@@ -11,6 +11,15 @@
             <el-form-item label="标题颜色设置">
                 <el-color-picker v-model="form.base.titleColor" show-alpha></el-color-picker>
             </el-form-item>
+            <el-form-item label="是否外跳" class="radio" required>
+                <el-radio-group v-model="form.base.isJumpOut">
+                    <el-radio :label="1">是</el-radio>
+                    <el-radio :label="0">否</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="外跳链接" v-show="form.base.isJumpOut==1" required>
+                <el-input v-model="form.base.outLink" placeholder="请输入外跳链接"></el-input>
+            </el-form-item>
             <el-form-item label="图片" required>
                 <el-upload
                 class="pic-uploader"
@@ -157,6 +166,8 @@ import './edit.less'
                     titleColor:"rgba(225, 225, 225, 1)",
                     picture:""
                     ,link:""
+                    ,isJumpOut:0
+                    ,outLink:""
                 },
                 medias:{
                     picture:""
@@ -258,6 +269,8 @@ import './edit.less'
                 me.form.base.titleColor = re.titleColor;
                 me.form.base.title = re.title;
                 me.form.base.picture = re.picture;
+                me.form.base.isJumpOut = re.isJumpOut;
+                me.form.base.outLink = re.outLink;
                 me.medias = re.medias;
             })
         }
@@ -322,6 +335,14 @@ import './edit.less'
             if(this.activeName==='base'){
                 var tip = me.checkData({picture:"请上传图片"},me.form.base)
                 if(!tip)return false
+                if(!me.form.base.outLink){
+                    me.tip('请输入外跳链接','warning')
+                    return
+                }
+                if(!me.$util.RegExp.url.test(me.form.base.outLink)){
+                    me.tip('外跳链接格式不正确','warning')
+                    return
+                }
                 this.activeName = "medias";
             }else {
                 var isPass = me.checkData({picture:"请上传图片"},me.form.base)
@@ -329,7 +350,7 @@ import './edit.less'
                     isPass = me.checkData({medias:{
                         tip:"请添加瀑布图",
                         validate:function(val){
-                            if(val.length){
+                            if(me.form.base.isJumpOut|| val.length){
                                 return true
                             }
                             return false
@@ -351,6 +372,8 @@ import './edit.less'
                     data:{
                         titleColor:this.form.base.titleColor,
                         title:this.form.base.title,
+                        outLink:this.form.base.outLink,
+                        isJumpOut:this.form.base.isJumpOut,
                         picture:this.form.base.picture,
                         medias:this.medias
                     }
