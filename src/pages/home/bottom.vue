@@ -72,6 +72,12 @@
                 <el-form-item label="排序号" required>
                     <el-input v-model="form.orderNumber" placeholder="请输入排序号"></el-input>
                 </el-form-item>
+                <el-form-item label="位置" class="radio" required>
+                    <el-radio-group v-model="form.position">
+                        <el-radio :label="1">左</el-radio>
+                        <el-radio :label="2">右</el-radio>
+                    </el-radio-group>
+                </el-form-item>
                 <el-form-item label="类型" class="radio" required>
                     <el-radio-group v-model="form.type">
                         <el-radio :label="1">图标</el-radio>
@@ -307,7 +313,8 @@ import './bottom.less'
                     "icon": row.icon||"",
                     "orderNumber": row.orderNumber||0,
                     "title": row.title||"",
-                    "type": row.type||1
+                    "type": row.type||1,
+                    "position":row.position||1
                 }
             }else{
                 this.form ={
@@ -317,7 +324,9 @@ import './bottom.less'
                     "icon": "",
                     "orderNumber": 0,
                     "title": "",
-                    "type": 1
+                    "type": 1,
+                    "position":1
+
                 }
             }
         }

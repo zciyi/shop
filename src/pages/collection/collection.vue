@@ -1,6 +1,10 @@
 <template>
     <div class="P-collection">
         <div>
+            <div class="P-collectionInput">
+                <label>标题</label>
+                <el-input v-model="form.base.title" placeholder="请输入标题"></el-input>
+            </div>
             <div class="addBtn M-Con-left" >
                 <el-button class="M-Btn" type="primary" @click="broadcastsEdit()">新增 </el-button>
             </div>
@@ -93,7 +97,7 @@ import './collection.less'
 
                 },
                 base:{
-                    backgroundColor:"rgba(225, 225, 225, 1)"
+                    title:""
                 }
             },
             upload:{
@@ -161,14 +165,18 @@ import './collection.less'
     },
     beforeCreate(){
         var me = this;
-        this.$request({
-            url:"/getCollection",
-            method:"get"
-        }).then(function(re){
-            me.form.base.backgroundColor = re.backgroundColor;
-            me.broadcasts = re.broadcasts;
-            me.id = re.id;
-        })
+        if(this.$route.query.id){
+            this.$request({
+                url:"/getCollection",
+                method:"get",
+                params:{id:this.$route.query.id}
+            }).then(function(re){
+                me.form.base.title = re.title;
+                me.broadcasts = re.broadcasts;
+                me.id = re.id;
+            })
+        }
+      
     },
     methods: {
         broadcastsEdit(scope){
@@ -200,28 +208,33 @@ import './collection.less'
         }
         ,onSubmit(){
             var me = this;
-            if(!this.form.base.backgroundColor){
-                this.tip("请设置色值","warning")
-                return
-            }else if(!this.broadcasts.length){
+            //if(!this.form.base.title){
+            //    this.tip("请输入标题","warning")
+            //    return
+            //}else 
+            if(!this.broadcasts.length){
                 this.tip("请添加轮播图","warning")
                 return
             }
             if(this.load)return
             this.load = true
+            var url = this.$route.query.id?"/updateCollection":"/createCollection"
+            var params = this.$route.query.id?{
+                id:this.id
+            }:{}
             this.$request({
-                url:"/updateCollection",
+                url:url,
                 method:"post",
-                params:{
-                    id:this.id
-                },
+                params:params,
                 data:{
-                    backgroundColor:this.form.base.backgroundColor,
+                    title:this.form.base.title,
                     broadcasts:this.broadcasts
                 }
             }).then(function(re){
                 if(re){
                     me.tip('保存成功');
+                    me.$router.push({path:"/collectionlist"})
+
                 }
                 me.load = false
             },function(){

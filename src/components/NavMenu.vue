@@ -28,7 +28,7 @@ import './NavMenu.less'
             path:"/campaign"
           },{
             text:"COLLECTION",
-            path:"/collection"
+            path:"/collectionlist"
           },{
             text:"E-SHOP",
             path:"/eshop"

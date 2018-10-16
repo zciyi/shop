@@ -7,6 +7,7 @@ import forbidden from "@/pages/forbidden"
 import campaign from "@/pages/campaign/campaign"
 import campaignEdit from "@/pages/campaign/edit"
 import collection from "@/pages/collection/collection"
+import collectionlist from "@/pages/collection/list"
 import eshop from "@/pages/eshop/eshop"
 import about from "@/pages/about/about"
 import project from "@/pages/project/project"
@@ -32,6 +33,7 @@ var routes = new Router({
         { path: '/home', component: home, name: 'home',text:"home"},
         { path: '/campaign', component: campaign, name: 'campaign',text:"campaign列表"},
         { path: '/campaignEdit', component: campaignEdit, name: 'campaignEdit',text:"campaign编辑"},
+        { path: '/collectionlist', component: collectionlist, name: 'collectionlist' },
         { path: '/collection', component: collection, name: 'collection' },
         { path: '/eshop', component: eshop, name: 'eshop' },
         { path: '/project', component: project, name: 'project' },

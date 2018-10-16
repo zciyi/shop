@@ -78,7 +78,7 @@ export default {
         path:"/campaign"
         ,hasSubNav:true
         ,subNav:[{
-            text:"campaign编辑",
+            text:"CAMPAIGN编辑",
             path:"/campaignEdit"
           }
         ]
@@ -90,7 +90,7 @@ export default {
         path:"/press"
         ,hasSubNav:true
         ,subNav:[{
-            text:"press编辑",
+            text:"PRESS编辑",
             path:"/pressEdit"
           }
         ]
@@ -99,7 +99,7 @@ export default {
         path:"/project"
         ,hasSubNav:true
         ,subNav:[{
-            text:"project编辑",
+            text:"PROJECT编辑",
             path:"/projectEdit"
           }
         ]
@@ -111,7 +111,13 @@ export default {
         path:"/about"
       },{
         text:"COLLECTION",
-        path:"/collection"
+        path:"/collectionlist"
+        ,hasSubNav:true
+        ,subNav:[{
+            text:"COLLECTION编辑",
+            path:"/collection"
+          }
+        ]
       },{
         text:"E-SHOP",
         path:"/eshop"
