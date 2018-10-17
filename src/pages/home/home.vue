@@ -149,7 +149,7 @@
                             <el-radio :label="2">视频</el-radio>
                         </el-radio-group>
                     </el-form-item>
-                     <el-form-item label="左图片" v-show="form.pic&&form.pic.leftMediaType===1" required>
+                     <el-form-item label="左图片" v-show="form.pic&&form.pic.leftMediaType===1" >
                         <div   @click="upload.setType('leftPicture')">
                             <el-upload
                             class="pic-uploader"
@@ -190,7 +190,7 @@
                             <el-radio :label="2">视频</el-radio>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="右图片" v-show="form.pic&&form.pic.rightMediaType===1" required>
+                    <el-form-item label="右图片" v-show="form.pic&&form.pic.rightMediaType===1">
                         <div   @click="upload.setType('rightPicture')">
                             <el-upload
                             class="pic-uploader"
@@ -210,7 +210,7 @@
                             <i v-if="form.pic&&form.pic.rightPicture" @click="upload.remove('rightPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
                         </div>
                     </el-form-item>
-                    <el-form-item label="右视频链接" v-show="form.pic&&form.pic.rightMediaType===2" required>
+                    <el-form-item label="右视频链接" v-show="form.pic&&form.pic.rightMediaType===2">
                         <el-input v-model="form.pic.rightVideo" placeholder="请上传视频链接" ></el-input>
                         <div @click="video.setType('rightVideo')">
                             <el-upload
@@ -340,24 +340,6 @@ import './home.less'
                             break
                         case "pic":
                             type = "catalogs";
-                            if(me.form.pic.leftMediaType===2){
-                                validate.leftVideo="请上传左视频链接"
-                            }else{
-                                validate.leftPicture = "请上传左图片"
-                                if(me.form[me.pop.type].leftLink&&!me.$util.RegExp.url.test(me.form[me.pop.type].leftLink)){
-                                     me.tip('跳转链接格式不正确','warning')
-                                     return
-                                }
-                            }
-                            if(me.form.pic.rightMediaType===2){
-                                validate.rightVideo="请上传右视频链接"
-                            }else{
-                                validate.rightPicture = "请上传右图片"
-                                if(me.form[me.pop.type].rightLink&&!me.$util.RegExp.url.test(me.form[me.pop.type].rightLink)){
-                                     me.tip('跳转链接格式不正确','warning')
-                                     return
-                                }
-                            }
                             break
                     }
                     var tip = me.checkData(validate,me.form[me.pop.type])

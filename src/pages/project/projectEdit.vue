@@ -133,21 +133,27 @@
                         <el-radio :label="2">右</el-radio>
                     </el-radio-group>
                 </el-form-item> -->
+                <el-form-item label="详情" class="radio" required>
+                    <div id="editor" style="margin-top:10px;"></div>
+                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button class="M-Btn" @click="pop.visible = false">取 消</el-button>
                 <el-button class="M-Btn" type="primary" @click="pop.confirm">确 定</el-button>
             </span>
+            
         </el-dialog>
         <el-dialog :visible.sync="dialogVisible" class="previewPop">
             <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
-            
     </div>
 </template>
 
+
 <script>
-import './edit.less'
+var weditor = require('../../components_module/wangEditor.js')
+import './projectEdit.less'
+var wangEditor;
   export default {
     data() {
         var me = this;
@@ -229,13 +235,13 @@ import './edit.less'
                         me.form.medias.picture=""
                         me.form.medias.link=""
                     }
+                    me.form.medias.description =wangEditor.txt.html()
                     if(me.pop.item.index||me.pop.item.index===0){
                          me.$set(me.medias,me.pop.item.index,me.form.medias)
                     }else{
                         var addIndex = me.medias.length
                         me.medias.push(me.form.medias)
                     }
-                    
                     me.pop.visible =false;
 
                 }
@@ -307,6 +313,7 @@ import './edit.less'
                     // ,position:(row.position || 1)
                     ,video:row.video||""
                 }
+                
             }else{
                 this.form.medias ={
                     picture:""
@@ -315,6 +322,44 @@ import './edit.less'
                     // ,position:1
                     ,video:""
                 }
+            }
+            if(!wangEditor){
+                setTimeout(function(){
+                        var E = weditor.wangEditor;
+                        var editor =  new E( document.getElementById('editor') );
+                        editor.customConfig.menus = [
+                            'head',  // 标题
+                            'bold',  // 粗体
+                            'fontSize',  // 字号
+                            'fontName',  // 字体
+                            'italic',  // 斜体
+                            'underline',  // 下划线
+                            'strikeThrough',  // 删除线
+                            'foreColor',  // 文字颜色
+                            'backColor',  // 背景颜色
+                            'link',  // 插入链接
+                            'list',  // 列表
+                            'justify',  // 对齐方式
+                            'quote',  // 引用
+                            'emoticon',  // 表情
+                            'undo',  // 撤销
+                            'redo'  // 重复
+                        ]
+                        editor.create()
+                        wangEditor = editor;
+                    
+                    if(scope){
+                        wangEditor.txt.html(row.description||'')
+                    }else{
+                        wangEditor.txt.clear()
+                    }
+                },1000)
+            }else{
+                if(scope){
+                        wangEditor.txt.html(row.description||'')
+                    }else{
+                        wangEditor.txt.clear()
+                    }
             }
         }
         ,onSubmit(){
