@@ -335,14 +335,18 @@ import './edit.less'
             if(this.activeName==='base'){
                 var tip = me.checkData({picture:"请上传图片"},me.form.base)
                 if(!tip)return false
-                if(!me.form.base.outLink){
-                    me.tip('请输入外跳链接','warning')
-                    return
+                if(me.form.base.isJumpOut){
+                    if(!me.form.base.outLink){
+                        me.tip('请输入外跳链接','warning')
+                        return
+                    }
+                    if(!me.$util.RegExp.url.test(me.form.base.outLink)){
+                        me.tip('外跳链接格式不正确','warning')
+                        return
+                    }
+
                 }
-                if(!me.$util.RegExp.url.test(me.form.base.outLink)){
-                    me.tip('外跳链接格式不正确','warning')
-                    return
-                }
+                
                 this.activeName = "medias";
             }else {
                 var isPass = me.checkData({picture:"请上传图片"},me.form.base)
