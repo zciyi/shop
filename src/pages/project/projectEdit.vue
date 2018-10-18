@@ -353,7 +353,7 @@ var wangEditor;
                     }else{
                         wangEditor.txt.clear()
                     }
-                },1000)
+                },3000)
             }else{
                 if(scope){
                         wangEditor.txt.html(row.description||'')
