@@ -5,7 +5,7 @@ import contenMain from '@/pages/contenMain'
 import login from '@/pages/login/login'
 import forbidden from "@/pages/forbidden"
 import campaign from "@/pages/campaign/campaign"
-import campaignEdit from "@/pages/campaign/edit"
+import campaignEdit from "@/pages/campaign/campaignEdit"
 import collection from "@/pages/collection/collection"
 import collectionlist from "@/pages/collection/list"
 import eshop from "@/pages/eshop/eshop"

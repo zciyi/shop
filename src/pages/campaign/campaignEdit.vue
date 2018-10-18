@@ -5,13 +5,13 @@
             <el-tab-pane label="瀑布图" name="medias"></el-tab-pane>
         </el-tabs>
         <el-form ref="form" :model="form" label-width="150px" v-show="activeName==='base'">
-            <el-form-item label="标题">
+            <el-form-item label="标题" required>
                 <el-input v-model="form.base.title" placeholder="请输入标题"></el-input>
             </el-form-item>
             <el-form-item label="标题颜色设置">
                 <el-color-picker v-model="form.base.titleColor" show-alpha></el-color-picker>
             </el-form-item>
-            <el-form-item label="图片" required>
+            <!-- <el-form-item label="图片" required>
                 <el-upload
                 class="pic-uploader"
                 :action="upload.url"
@@ -28,7 +28,7 @@
                     </div>
                     <i v-if="form.base.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
                 </div>
-            </el-form-item>
+            </el-form-item> -->
         </el-form>
         <div v-if="activeName==='medias'">
             <div class="addBtn M-Con-left" >
@@ -148,16 +148,16 @@
 </template>
 
 <script>
-import './edit.less'
+import './campaignEdit.less'
   export default {
     data() {
         var me = this;
       return {
             form:{
                 base:{
-                    titleColor:"rgba(225, 225, 225, 1)",
-                    picture:""
+                    titleColor:"rgba(225, 225, 225, 1)"
                     ,link:""
+                    ,title:""
                 },
                 medias:{
                     picture:""
@@ -260,7 +260,6 @@ import './edit.less'
             }).then(function(re){
                 me.form.base.titleColor = re.titleColor;
                 me.form.base.title = re.title;
-                me.form.base.picture = re.picture;
                 me.medias = re.medias;
             })
         }
@@ -322,12 +321,11 @@ import './edit.less'
         ,onSubmit(){
             var me = this;
             if(this.activeName==='base'){
-                var tip = me.checkData({picture:"请上传图片"},me.form.base)
+                var tip = me.checkData({title:"请输入标题"},me.form.base)
                 if(!tip)return false
                 this.activeName = "medias";
             }else {
-                var isPass = me.checkData({picture:"请上传图片"},me.form.base)
-                debugger
+                var isPass = me.checkData({title:"请输入标题"},me.form.base)
                 if(isPass){
                     isPass = me.checkData({medias:{
                         tip:"请添加瀑布图",
@@ -356,7 +354,6 @@ import './edit.less'
                     data:{
                         titleColor:this.form.base.titleColor,
                         title:this.form.base.title,
-                        picture:this.form.base.picture,
                         medias:this.medias
                     }
                 }).then(function(re){

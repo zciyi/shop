@@ -5,15 +5,14 @@
       </div>
       <el-table
         :data="tableData"
-        border
         style="width: 100%" >
-        <el-table-column
+        <!-- <el-table-column
         prop="picture"
         label="图片">
           <template slot-scope="scope">
               <img  :src="scope.row.picture" v-if="scope.row.picture" class="pic">
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
         prop="title"
         label="标题">
