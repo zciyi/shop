@@ -96,7 +96,7 @@
                         <el-radio :label="2">视频</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="背景图" v-show="form.medias.mediaType===1" required>
+                <el-form-item label="图片" v-show="form.medias.mediaType===1" required>
                     <el-upload
                     class="pic-uploader"
                     :action="upload.url"

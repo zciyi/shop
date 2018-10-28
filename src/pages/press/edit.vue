@@ -155,7 +155,7 @@
                         <el-radio :label="2">视频</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="背景图" v-show="form[activeName].mediaType===1" required>
+                <el-form-item label="图片" v-show="form[activeName].mediaType===1" required>
                     <el-upload
                     class="pic-uploader"
                     :action="upload.url"
@@ -367,7 +367,13 @@ import './edit.less'
         },
         mediasEdit(scope){
             this.pop.visible = true;
-            this.pop.title =  scope?"编辑瀑布图":"新增瀑布图";
+            if(this.activeName==='bar'){
+                this.pop.title =  scope?"编辑轮播图":"新增轮播图";
+
+            }else{
+                this.pop.title =  scope?"编辑瀑布图":"新增瀑布图";
+
+            }
             if(scope){
                 scope.row.index = scope.$index;
                 var row = scope.row
@@ -484,15 +490,21 @@ import './edit.less'
         ,goback(){
             this.$router.push({path:"/press"})
         }
-        ,tip(title,type,duration){
+        ,tip(title,type,duration){  
             this.$notify({
                 title: title || '',
                 type: type||'success',
                 duration:duration||1000
             });
 
-        },mediasDelete(scope){
-            this.medias.splice(scope.$index,1)
+        },mediasDelete(scope,key){
+            if(key){
+                this[key].splice(scope.$index,1)
+
+            }else{
+                this.medias.splice(scope.$index,1)
+
+            }
         }
     }
   }

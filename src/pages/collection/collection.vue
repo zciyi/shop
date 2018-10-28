@@ -44,7 +44,7 @@
             center>
             <div v-if="pop.type==='bar'">
                 <el-form ref="form" :model="form" label-width="150px">
-                    <el-form-item label="背景图" required>
+                    <el-form-item label="图片" required>
                         <el-upload
                         class="pic-uploader"
                         :action="upload.url"
