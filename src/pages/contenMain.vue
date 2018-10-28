@@ -71,7 +71,7 @@ export default {
         text:"底部管理",
         path:"/bottom"
       },{
-        text:"菜单管理",
+        text:"菜单颜色管理",
         path:"/menu"
       },{
         text:"CAMPAIGN列表",

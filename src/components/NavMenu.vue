@@ -45,7 +45,7 @@ import './NavMenu.less'
             text:"ABOUT CARSYDA",
             path:"/about"
           },{
-            text:"菜单管理",
+            text:"菜单颜色管理",
             path:"/menu",
           },{
               text:"底部管理",
