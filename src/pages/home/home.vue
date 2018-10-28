@@ -1,9 +1,62 @@
 <template>
     <div class="P-home">
         <el-tabs v-model="activeName">
+            <el-tab-pane label="基础" name="base"></el-tab-pane>
             <el-tab-pane label="轮播图" name="bar"></el-tab-pane>
             <el-tab-pane label="瀑布图" name="pic"></el-tab-pane>
         </el-tabs>
+        <div v-show="activeName==='base'">
+            <el-form ref="form" :model="form" label-width="150px">
+                <el-form-item label="左类型" class="radio">
+                    <el-radio-group v-model="form.base.isOpen">
+                        <el-radio :label="1">开</el-radio>
+                        <el-radio :label="0">关</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="logo图" required v-show="form.base.isOpen">
+                    <div @click="upload.setType('logoPicture')">
+                        <el-upload
+                        class="pic-uploader"
+                        :action="upload.url"
+                        :on-success="upload.success"
+                        :before-upload="upload.beforeUpload"
+                        :headers="upload.headers"
+                        v-if="!form.base.logoPicture"
+                        >
+                        <i class="el-icon-plus pic-uploader-icon"></i>
+                        </el-upload>
+                    </div>
+                    
+                    <div class="pic">
+                        <div class="picImg">
+                            <img v-if="form.base&&form.base.logoPicture" @click="handlePictureCardPreview(form.base.logoPicture)"  :src="form.base.logoPicture" >
+                        </div>
+                        <i v-if="form.base&&form.base.logoPicture" @click="upload.remove('logoPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
+                    </div>
+                </el-form-item>
+                <el-form-item label="底图" required  v-show="form.base.isOpen">
+                    <div @click="upload.setType('backgroundPicture')">
+                        <el-upload
+                        class="pic-uploader"
+                        :action="upload.url"
+                        :on-success="upload.success"
+                        :before-upload="upload.beforeUpload"
+                        :headers="upload.headers"
+                        v-if="!form.base.backgroundPicture"
+                        >
+                        <i class="el-icon-plus pic-uploader-icon"></i>
+                        </el-upload>
+                    </div>
+                    <div class="pic">
+                        <div class="picImg">
+                            <img v-if="form.base&&form.base.backgroundPicture" @click="handlePictureCardPreview(form.base.backgroundPicture)"  :src="form.base.backgroundPicture" >
+                        </div>
+                        <i v-if="form.base&&form.base.backgroundPicture" @click="upload.remove('backgroundPicture')" class="el-icon-close pic-uploader-icon picIcon"></i>
+                    </div>
+                </el-form-item>
+            </el-form>
+
+        </div>
         <div v-show="activeName==='bar'">
             <div class="addBtn M-Con-left" >
                 <el-button class="M-Btn" type="primary" @click="broadcastsEdit()">新增 </el-button>
@@ -257,7 +310,10 @@ import './home.less'
 
                 },
                 base:{
-                    backgroundColor:"rgba(225, 225, 225, 1)"
+                    backgroundColor:"rgba(225, 225, 225, 1)",
+                    logoPicture:"",
+                    backgroundPicture:"",
+                    isOpen:1
                 },
                 pic:
                 {
@@ -295,7 +351,13 @@ import './home.less'
                 },
                 url:this.$config.protocol+"://"+this.$config.biServer+this.$config.apis["/uploadFile"]||'',                
                 success:(res, file)=>{
-                    me.form[me.pop.type][me.typeUpload||'picture'] = res.result.url;
+                    if(me.activeName==='base'){
+                        me.form[me.activeName][me.typeUpload||'picture'] = res.result.url;
+
+                    }else{
+                        me.form[me.pop.type][me.typeUpload||'picture'] = res.result.url;
+
+                    }
                 },
                 beforeUpload:(file)=>{
                     var format = file.type && file.type.split("/")
@@ -311,13 +373,19 @@ import './home.less'
                     return isImg && isLt2M;
                 },
                 remove(type){
-                    me.form[me.pop.type][type||'picture']="";
+                    if(me.activeName==='base'){
+                        me.form[me.activeName][type||'picture']="";
+
+                    }else{
+                        me.form[me.pop.type][type||'picture']="";
+
+                    }
                 },
                 setType(key){
                     me.typeUpload=key;
                 }
             }
-            ,activeName:'bar'
+            ,activeName:'base'
             ,broadcasts:[]
             ,catalogs:[]
             ,pop:{
@@ -381,7 +449,9 @@ import './home.less'
             url:"/getIndex",
             method:"get"
         }).then(function(re){
-            me.form.base.backgroundColor = re.backgroundColor;
+            me.form.base.backgroundPicture = re.backgroundPicture;
+            me.form.base.isOpen = re.isOpen;
+            me.form.base.logoPicture = re.logoPicture;
             me.catalogs = re.catalogs;
             me.broadcasts = re.broadcasts;
             me.id = re.id;
@@ -452,7 +522,31 @@ import './home.less'
         }
         ,onSubmit(){
             var me = this;
-            if(this.activeName==='pic'){
+            if(this.activeName==="base"){
+                if(this.form.base.isOpen){
+                    if(!this.form.base.backgroundPicture){
+                        this.tip("请上传底图","warning")
+                        return
+                    }else if(!this.form.base.logoPicture){
+                        this.tip("请上传logo图","warning")
+                        return
+                    }
+                }
+                this.activeName='bar'
+            }else if( this.activeName==='bar'){
+                if(!this.broadcasts.length){
+                    this.tip("请添加轮播图","warning")
+                    return
+                }
+                this.activeName='pic'
+            }else if(this.activeName==='pic'){
+                if(!this.form.base.backgroundPicture){
+                    this.tip("请上传底图","warning")
+                    return
+                }else if(!this.form.base.logoPicture){
+                    this.tip("请上传logo图","warning")
+                    return
+                }else
                 if(!this.broadcasts.length){
                     this.tip("请添加轮播图","warning")
                     return
@@ -467,7 +561,9 @@ import './home.less'
                         id:this.id
                     },
                     data:{
-                        backgroundColor:this.form.base.backgroundColor,
+                        isOpen:this.form.base.isOpen,
+                        logoPicture:this.form.base.logoPicture,
+                        backgroundPicture:this.form.base.backgroundPicture,
                         catalogs:this.catalogs,
                         broadcasts:this.broadcasts
                     }
@@ -481,14 +577,6 @@ import './home.less'
                     }
                 })
 
-            }else{
-                var keep = false;
-                this.nav.forEach(function(item,index){
-                    if(me.activeName===item&&!keep){
-                        me.activeName = me.nav[index+1]
-                        keep = true
-                    }
-                });
             }
             
 
