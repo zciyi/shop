@@ -2,6 +2,7 @@
     <div class="P-pressEdit">
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="基础配置" name="base"></el-tab-pane>
+            <el-tab-pane label="轮播图" name="catalogs"></el-tab-pane>
             <el-tab-pane label="瀑布图" name="medias"></el-tab-pane>
         </el-tabs>
         <el-form ref="form" :model="form" label-width="150px" v-if="activeName==='base'">
@@ -39,6 +40,55 @@
                 </div>
             </el-form-item>
         </el-form>
+        <div v-show="activeName==='catalogs'">
+            <div class="addBtn M-Con-left" >
+                <el-button type="primary"  class="M-Btn"  @click="mediasEdit()">新增 </el-button>
+            </div>
+            <el-table
+            :data="catalogs"
+            border
+            style="width: 100%" >
+                <el-table-column
+                prop="mediaType"
+                label="类型">
+                <template slot-scope="scope">
+                    {{scope.row.mediaType==1?"图片":"视频"}}
+                </template>
+                </el-table-column>
+                <el-table-column
+                prop="picture"
+                label="图片/视频">
+                <template slot-scope="scope">
+                    <img  :src="scope.row.picture" v-if="scope.row.mediaType==1&&scope.row.picture" class="pic">
+                    <div v-if="scope.row.mediaType==2&&scope.row.video" >{{scope.row.video}}</div>
+                </template>
+                </el-table-column>
+                <el-table-column
+                prop="link"
+                label="跳转链接">
+                    <template slot-scope="scope" v-if="scope.row.mediaType==1">
+                        {{scope.row.link}}
+                    </template>
+                
+                </el-table-column>
+                <!-- <el-table-column
+                prop="position"
+                label="位置">
+                    <template slot-scope="scope">
+                        {{scope.row.position==1?"左":"右"}}
+                    </template>
+                </el-table-column> -->
+                <el-table-column
+                    fixed="right"
+                    label="操作"
+                    width="100">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="mediasEdit(scope,'catalogs')" v-model="scope.row" size="small">编辑</el-button>
+                        <el-button type="text" @click="mediasDelete(scope,'catalogs')" v-model="scope.row" size="small">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
         <div v-show="activeName==='medias'">
             <div class="addBtn M-Con-left" >
                 <el-button type="primary"  class="M-Btn"  @click="mediasEdit()">新增 </el-button>
@@ -100,31 +150,31 @@
         center>
             <el-form ref="form" :model="form" label-width="150px" >
                 <el-form-item label="类型" class="radio" required>
-                    <el-radio-group v-model="form.medias.mediaType">
+                    <el-radio-group v-model="form[activeName].mediaType">
                         <el-radio :label="1">图片</el-radio>
                         <el-radio :label="2">视频</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="背景图" v-show="form.medias.mediaType===1" required>
+                <el-form-item label="背景图" v-show="form[activeName].mediaType===1" required>
                     <el-upload
                     class="pic-uploader"
                     :action="upload.url"
                     :on-success="upload.success"
                     :before-upload="upload.beforeUpload"
                     :headers="upload.headers"
-                    v-if="!form.medias.picture&&upload.headers"
+                    v-if="!form[activeName].picture&&upload.headers"
                     >
                     <i class="el-icon-plus pic-uploader-icon"></i>
                     </el-upload>
                     <div class="pic">
                         <div class="picImg">
-                            <img v-if="form.medias.picture" @click="handlePictureCardPreview(form.medias.picture)"  :src="form.medias.picture" >
+                            <img v-if="form[activeName].picture" @click="handlePictureCardPreview(form[activeName].picture)"  :src="form[activeName].picture" >
                         </div>
-                        <i v-if="form.medias.picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
+                        <i v-if="form[activeName].picture" @click="upload.remove" class="el-icon-close pic-uploader-icon picIcon"></i>
                     </div>
                 </el-form-item>
-                <el-form-item label="视频链接" v-show="form.medias.mediaType===2" required>
-                    <el-input v-model="form.medias.video" placeholder="请上传视频链接" ></el-input>
+                <el-form-item label="视频链接" v-show="form[activeName].mediaType===2" required>
+                    <el-input v-model="form[activeName].video" placeholder="请上传视频链接" ></el-input>
                     <el-upload
                         :action="video.url"
                         :headers="upload.headers"
@@ -133,8 +183,8 @@
                         <el-button size="small" type="primary">点击上传</el-button>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="跳转链接" v-show="form.medias.mediaType===1" >
-                    <el-input v-model="form.medias.link" placeholder="请输入跳转链接"></el-input>
+                <el-form-item label="跳转链接" v-show="form[activeName].mediaType===1" >
+                    <el-input v-model="form[activeName].link" placeholder="请输入跳转链接"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="位置" class="radio" required>
                     <el-radio-group v-model="form.medias.position">
@@ -175,8 +225,16 @@ import './edit.less'
                     ,link:""
                     // ,position:1
                     ,video:""
+                },
+                catalogs:{
+                    picture:""
+                    ,mediaType:1
+                    ,link:""
+                    // ,position:1
+                    ,video:""
                 }
             },
+            catalogs:[],
             medias:[],
             activeName:"base",
             dialogImageUrl: '',
@@ -187,7 +245,7 @@ import './edit.less'
                 success:(res, file)=>{
                     this.tip('上传成功');
                     this.src=file;
-                    this.form.medias.video=res.result.url;
+                    this.form[me.activeName].video=res.result.url;
                 }
             },
             upload:{
@@ -224,27 +282,27 @@ import './edit.less'
                 },
                 confirm:function(){
                     var validate ={}
-                    if(me.form.medias.mediaType===2){
+                    if(me.form[me.activeName].mediaType===2){
                         validate.video="请上传视频链接"
                     }else{
                         validate.picture = "请上传图片"
-                        if(me.form.medias.link&&!me.$util.RegExp.url.test(me.form.medias.link)){
+                        if(me.form[me.activeName].link&&!me.$util.RegExp.url.test(me.form[me.activeName].link)){
                             me.tip('跳转链接格式不正确','warning')
                             return
                         }
                     }
-                    var tip = me.checkData(validate,me.form.medias)
+                    var tip = me.checkData(validate,me.form[me.activeName])
                     if(!tip)return false
-                    if(me.form.medias.mediaType===1)me.form.medias.video=""
-                    if(me.form.medias.mediaType===2){
-                        me.form.medias.picture=""
-                        me.form.medias.link=""
+                    if(me.form[me.activeName].mediaType===1)me.form[me.activeName].video=""
+                    if(me.form[me.activeName].mediaType===2){
+                        me.form[me.activeName].picture=""
+                        me.form[me.activeName].link=""
                     }
                     if(me.pop.item.index||me.pop.item.index===0){
-                         me.$set(me.medias,me.pop.item.index,me.form.medias)
+                         me.$set(me[me.activeName],me.pop.item.index,me.form[me.activeName])
                     }else{
-                        var addIndex = me.medias.length
-                        me.medias.push(me.form.medias)
+                        var addIndex = me[me.activeName].length
+                        me[me.activeName].push(me.form[me.activeName])
                     }
                     
                     me.pop.visible =false;
@@ -272,6 +330,7 @@ import './edit.less'
                 me.form.base.isJumpOut = re.isJumpOut;
                 me.form.base.outLink = re.outLink;
                 me.medias = re.medias;
+                me.catalogs = re.catalogs;
             })
         }
         
@@ -313,7 +372,7 @@ import './edit.less'
                 scope.row.index = scope.$index;
                 var row = scope.row
                 this.pop.item = row;
-                this.form.medias ={
+                this.form[this.activeName] ={
                     picture:row.picture||""
                     ,mediaType:(row.mediaType|| 1)
                     ,link:row.link||""
@@ -321,7 +380,7 @@ import './edit.less'
                     ,video:row.video||""
                 }
             }else{
-                this.form.medias ={
+                this.form[this.activeName] ={
                     picture:""
                     ,mediaType:1
                     ,link:""
@@ -347,9 +406,34 @@ import './edit.less'
 
                 }
                 
+                this.activeName = "catalogs";
+            }else if(this.activeName === "catalogs"){
+                var tip =me.checkData({catalogs:{
+                    tip:"请添加轮播图",
+                    validate:function(val){
+                        if( val.length){
+                                return true
+                            }
+                            return false
+                        }
+                    }
+                }
+                ,{catalogs:me.catalogs})
+                if(!tip)return false
                 this.activeName = "medias";
-            }else {
+            }else{
                 var isPass = me.checkData({picture:"请上传图片"},me.form.base)
+                isPass = me.checkData({catalogs:{
+                    tip:"请添加轮播图",
+                    validate:function(val){
+                        if( val.length){
+                                return true
+                            }
+                            return false
+                        }
+                    }
+                }
+                ,{catalogs:me.catalogs})
                 if(isPass){
                     isPass = me.checkData({medias:{
                         tip:"请添加瀑布图",
@@ -379,7 +463,8 @@ import './edit.less'
                         outLink:this.form.base.outLink,
                         isJumpOut:this.form.base.isJumpOut,
                         picture:this.form.base.picture,
-                        medias:this.medias
+                        medias:this.medias,
+                        catalogs:this.catalogs
                     }
                 }).then(function(re){
                     me.load=false;
