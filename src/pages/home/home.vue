@@ -5,13 +5,22 @@
             <el-tab-pane label="轮播图" name="bar"></el-tab-pane>
             <el-tab-pane label="瀑布图" name="pic"></el-tab-pane>
         </el-tabs>
-        <div v-show="activeName==='base'">
+        <div v-show="activeName==='base'" class="P-homeBase">
             <el-form ref="form" :model="form" label-width="150px">
                 <el-form-item label="左类型" class="radio">
                     <el-radio-group v-model="form.base.isOpen">
                         <el-radio :label="1">开</el-radio>
                         <el-radio :label="0">关</el-radio>
                     </el-radio-group>
+                </el-form-item>
+                <el-form-item label="logo图展示宽度" v-show="form.base.isOpen">
+                    <el-input v-model="form.base.logoWidth" placeholder="请输入logo图展示宽度"></el-input>
+                </el-form-item>
+                <el-form-item label="logo图展示高度" v-show="form.base.isOpen">
+                    <el-input v-model="form.base.logoLength" placeholder="请输入logo图展示高度"></el-input>
+                </el-form-item>
+                <el-form-item label="动画时长" v-show="form.base.isOpen">
+                    <el-input v-model="form.base.duration" placeholder="请输入动画时长"></el-input>
                 </el-form-item>
                 <el-form-item label="logo图" required v-show="form.base.isOpen">
                     <div @click="upload.setType('logoPicture')">
@@ -313,7 +322,10 @@ import './home.less'
                     backgroundColor:"rgba(225, 225, 225, 1)",
                     logoPicture:"",
                     backgroundPicture:"",
-                    isOpen:1
+                    isOpen:1,
+                    logoLength:"",
+                    logoWidth:"",
+                    duration:""
                 },
                 pic:
                 {
@@ -451,6 +463,9 @@ import './home.less'
         }).then(function(re){
             me.form.base.backgroundPicture = re.backgroundPicture;
             me.form.base.isOpen = re.isOpen;
+            me.form.base.logoLength = re.logoLength;
+            me.form.base.logoWidth = re.logoWidth;
+            me.form.base.duration = re.duration;
             me.form.base.logoPicture = re.logoPicture;
             me.catalogs = re.catalogs;
             me.broadcasts = re.broadcasts;
@@ -565,7 +580,10 @@ import './home.less'
                         logoPicture:this.form.base.logoPicture,
                         backgroundPicture:this.form.base.backgroundPicture,
                         catalogs:this.catalogs,
-                        broadcasts:this.broadcasts
+                        broadcasts:this.broadcasts,
+                        logoWidth:this.form.base.logoWidth,
+                        logoLength:this.form.base.logoLength,
+                        duration:this.form.base.duration
                     }
                 }).then(function(re){
                     if(re){
