@@ -370,18 +370,18 @@ var wangEditor;
                 this.activeName = "medias";
             }else {
                 var isPass = me.checkData({picture:"请上传图片"},me.form.base)
-                if(isPass){
-                    isPass = me.checkData({medias:{
-                        tip:"请添加瀑布图",
-                        validate:function(val){
-                            if(val.length){
-                                return true
-                            }
-                            return false
-                        }
-                    }
-                    },{medias:me.medias})
-                }
+                // if(isPass){
+                //     isPass = me.checkData({medias:{
+                //         tip:"请添加瀑布图",
+                //         validate:function(val){
+                //             if(val.length){
+                //                 return true
+                //             }
+                //             return false
+                //         }
+                //     }
+                //     },{medias:me.medias})
+                // }
                 
                 if(!isPass||this.load)return
                 var id = this.$route.query.id

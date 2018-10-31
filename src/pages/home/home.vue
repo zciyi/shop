@@ -534,10 +534,10 @@ import './home.less'
                 }
                 this.activeName='bar'
             }else if( this.activeName==='bar'){
-                if(!this.broadcasts.length){
-                    this.tip("请添加轮播图","warning")
-                    return
-                }
+                // if(!this.broadcasts.length){
+                //     this.tip("请添加轮播图","warning")
+                //     return
+                // }
                 this.activeName='pic'
             }else if(this.activeName==='pic'){
                 if(!this.form.base.backgroundPicture){
@@ -547,13 +547,13 @@ import './home.less'
                     this.tip("请上传logo图","warning")
                     return
                 }else
-                if(!this.broadcasts.length){
-                    this.tip("请添加轮播图","warning")
-                    return
-                }else if(!this.catalogs.length){
-                    this.tip("请添加瀑布图","warning")
-                    return
-                }
+                // if(!this.broadcasts.length){
+                //     this.tip("请添加轮播图","warning")
+                //     return
+                // }else if(!this.catalogs.length){
+                //     this.tip("请添加瀑布图","warning")
+                //     return
+                // }
                 this.$request({
                     url:"/saveIndex",
                     method:"post",

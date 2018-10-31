@@ -414,44 +414,44 @@ import './edit.less'
                 
                 this.activeName = "catalogs";
             }else if(this.activeName === "catalogs"){
-                var tip =me.checkData({catalogs:{
-                    tip:"请添加轮播图",
-                    validate:function(val){
-                        if( val.length){
-                                return true
-                            }
-                            return false
-                        }
-                    }
-                }
-                ,{catalogs:me.catalogs})
-                if(!tip)return false
+                // var tip =me.checkData({catalogs:{
+                //     tip:"请添加轮播图",
+                //     validate:function(val){
+                //         if( val.length){
+                //                 return true
+                //             }
+                //             return false
+                //         }
+                //     }
+                // }
+                // ,{catalogs:me.catalogs})
+                // if(!tip)return false
                 this.activeName = "medias";
             }else{
                 var isPass = me.checkData({picture:"请上传图片"},me.form.base)
-                isPass = me.checkData({catalogs:{
-                    tip:"请添加轮播图",
-                    validate:function(val){
-                        if( val.length){
-                                return true
-                            }
-                            return false
-                        }
-                    }
-                }
-                ,{catalogs:me.catalogs})
-                if(isPass){
-                    isPass = me.checkData({medias:{
-                        tip:"请添加瀑布图",
-                        validate:function(val){
-                            if(me.form.base.isJumpOut|| val.length){
-                                return true
-                            }
-                            return false
-                        }
-                    }
-                    },{medias:me.medias})
-                }
+                // isPass = me.checkData({catalogs:{
+                //     tip:"请添加轮播图",
+                //     validate:function(val){
+                //         if( val.length){
+                //                 return true
+                //             }
+                //             return false
+                //         }
+                //     }
+                // }
+                // ,{catalogs:me.catalogs})
+                // if(isPass){
+                //     isPass = me.checkData({medias:{
+                //         tip:"请添加瀑布图",
+                //         validate:function(val){
+                //             if(me.form.base.isJumpOut|| val.length){
+                //                 return true
+                //             }
+                //             return false
+                //         }
+                //     }
+                //     },{medias:me.medias})
+                // }
                 if(!isPass||this.load)return
                 var id = this.$route.query.id
                 var url =id?"/updatePress":"/savePress"

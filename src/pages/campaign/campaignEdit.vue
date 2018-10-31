@@ -326,19 +326,19 @@ import './campaignEdit.less'
                 this.activeName = "medias";
             }else {
                 var isPass = me.checkData({title:"请输入标题"},me.form.base)
-                if(isPass){
-                    isPass = me.checkData({medias:{
-                        tip:"请添加瀑布图",
-                        validate:function(val){
-                            if(val.length){
-                                return true
-                            }
-                            return false
-                        }
-                    }
-                    },{medias:me.medias})
+                // if(isPass){
+                //     isPass = me.checkData({medias:{
+                //         tip:"请添加瀑布图",
+                //         validate:function(val){
+                //             if(val.length){
+                //                 return true
+                //             }
+                //             return false
+                //         }
+                //     }
+                //     },{medias:me.medias})
 
-                }
+                // }
                 
                 if(!isPass||this.load)return
                 this.load =true
@@ -354,7 +354,7 @@ import './campaignEdit.less'
                     data:{
                         titleColor:this.form.base.titleColor,
                         title:this.form.base.title,
-                        medias:this.medias
+                        medias:this.medias||[]
                     }
                 }).then(function(re){
                     me.load = false;
