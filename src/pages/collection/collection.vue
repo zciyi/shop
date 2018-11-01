@@ -212,10 +212,10 @@ import './collection.less'
             //    this.tip("请输入标题","warning")
             //    return
             //}else 
-            if(!this.broadcasts.length){
-                this.tip("请添加轮播图","warning")
-                return
-            }
+            // if(!this.broadcasts.length){
+            //     this.tip("请添加轮播图","warning")
+            //     return
+            // }
             if(this.load)return
             this.load = true
             var url = this.$route.query.id?"/updateCollection":"/createCollection"
