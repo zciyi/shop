@@ -238,7 +238,7 @@
                                 :action="video.url"
                                 :headers="upload.headers"
                                 :on-success="video.success"
-                                :show-file-list="false">
+                                :file-list="fileList">
                                 <el-button size="small" type="primary">点击上传</el-button>
                             </el-upload>
                         </div>
@@ -279,7 +279,7 @@
                                 :action="video.url"
                                 :headers="upload.headers"
                                 :on-success="video.success"
-                                :show-file-list="false">
+                                :file-list="fileList">
                                 <el-button size="small" type="primary">点击上传</el-button>
                             </el-upload>
                         </div>
@@ -342,6 +342,7 @@ import './home.less'
                 }
 
             },
+            fileList:[],
             videoUpload:'',
             video:{
                 src:[],
@@ -350,6 +351,7 @@ import './home.less'
                     this.tip('上传成功');
                     this.src=file
                     this.form[me.pop.type][me.videoUpload]=res.result.url;
+                    this.fileList.splice(0,0);
                 },
                 setType(key){
                     me.videoUpload=key;

@@ -120,7 +120,7 @@
                         :action="video.url"
                         :headers="upload.headers"
                         :on-success="video.success"
-                        :show-file-list="false">
+                        :file-list="fileList">
                         <el-button size="small" type="primary">点击上传</el-button>
                     </el-upload>
                 </el-form-item>
@@ -172,6 +172,7 @@ var wangEditor;
                     ,video:""
                 }
             },
+            fileList:[],
             medias:[],
             activeName:"base",
             dialogImageUrl: '',
@@ -183,6 +184,7 @@ var wangEditor;
                     this.tip('上传成功');
                     this.src=file;
                     this.form.medias.video=res.result.url;
+                    this.fileList.splice(0,0);
                 }
             },
             upload:{
