@@ -7,7 +7,7 @@
         </el-tabs>
         <div v-show="activeName==='base'" class="P-homeBase">
             <el-form ref="form" :model="form" label-width="150px">
-                <el-form-item label="左类型" class="radio">
+                <el-form-item label="logo开关" class="radio">
                     <el-radio-group v-model="form.base.isOpen">
                         <el-radio :label="1">开</el-radio>
                         <el-radio :label="0">关</el-radio>

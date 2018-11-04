@@ -198,6 +198,10 @@ import './shop.less'
                     }).then(function(re){
                     if(re){
                         me.tip('保存成功');
+                        if(type){
+                            me.getData(me.currentPage,me.pagesSize);
+                        }
+                        
                     }
                     me.load = false;
                     },function(){
