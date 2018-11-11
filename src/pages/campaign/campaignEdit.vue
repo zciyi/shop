@@ -8,9 +8,9 @@
             <el-form-item label="标题" required>
                 <el-input v-model="form.base.title" placeholder="请输入标题"></el-input>
             </el-form-item>
-            <el-form-item label="标题颜色设置">
+            <!-- <el-form-item label="标题颜色设置">
                 <el-color-picker v-model="form.base.titleColor" show-alpha></el-color-picker>
-            </el-form-item>
+            </el-form-item> -->
             <!-- <el-form-item label="图片" required>
                 <el-upload
                 class="pic-uploader"
