@@ -86,7 +86,7 @@
         <el-dialog
         :title="pop.title"
         :visible.sync="pop.visible"
-        width="60%"
+        width="90%"
         :before-close="pop.close"
         center>
             <el-form ref="form" :model="form" label-width="150px" >
@@ -133,7 +133,7 @@
                         <el-radio :label="2">右</el-radio>
                     </el-radio-group>
                 </el-form-item> -->
-                <el-form-item label="详情" class="radio" required>
+                <el-form-item label="详情" class="radio" >
                     <div id="editor" style="margin-top:10px;"></div>
                 </el-form-item>
             </el-form>
