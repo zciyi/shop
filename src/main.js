@@ -10,24 +10,40 @@ import http from './components_module/http.js'
 
 Vue.use(Element)
 Vue.use(http);
-Vue.http.onRequest(function(request){})
-Vue.http.onResponse(function(response,request){})
+Vue.http.onRequest(function(request) {})
+Vue.http.onResponse(function(response, request) {})
 Vue.http.setUriMap()
 Vue.config.productionTip = false
-Vue.filter('timeStr', function (value) {
-  var date = new Date(value);
-  var Y = date.getFullYear() + '-';
-  var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-  var D = date.getDate()<10?('0'+date.getDate() + ' '):(date.getDate() + ' ');
-  var h = date.getHours()<10?('0'+date.getHours() + ':'):(date.getHours() + ':');
-  var m = date.getMinutes()<10?('0'+date.getMinutes() + ':'):(date.getMinutes()+':');
-  var s = date.getSeconds()<10?('0'+date.getSeconds()):date.getSeconds();
-  return Y+M+D+h+m+s;
+Vue.filter('timeStr', function(value) {
+    var date = new Date(value);
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = date.getDate() < 10 ? ('0' + date.getDate() + ' ') : (date.getDate() + ' ');
+    var h = date.getHours() < 10 ? ('0' + date.getHours() + ':') : (date.getHours() + ':');
+    var m = date.getMinutes() < 10 ? ('0' + date.getMinutes() + ':') : (date.getMinutes() + ':');
+    var s = date.getSeconds() < 10 ? ('0' + date.getSeconds()) : date.getSeconds();
+    return Y + M + D + h + m + s;
 
 })
 
+// 统一提示
+const tipMap = {
+    1: "success",
+    2: "warning",
+    3: "info",
+    4: "error",
+}
+
+
+Vue.prototype.$tip = function(title, type, duration) {
+    this.$notify({
+        title: title || '',
+        type: tipMap[type] || type || 'success',
+        duration: duration || 2000
+    });
+}
 
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')

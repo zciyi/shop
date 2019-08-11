@@ -28,4 +28,32 @@
             margin-left: 0;
         }
     }
+    #container{
+        height: 300px;
+    }
+    .position{
+        width: 120px;
+    }
+    .positionTip{
+        position: relative;
+        background: #fff;
+        padding: 10px;
+        padding-right: 100px;
+        line-height: normal;
+    }
+    .positionBtn{
+       position: absolute;
+       top: 50%;
+       right: 10px;
+       transform: translate(0,-50%);
+    }
+    .positionInput{
+        background: #fff;
+        padding:  0 10px;
+    }
+    .positionRequire::before{
+        content: '*';
+        color: #f56c6c;
+        margin-right: 4px;
+    }
 }
