@@ -520,8 +520,7 @@ export default {
                     }
                     return true
                 }
-                },
-                address:"请输入地址"
+                }
             }
             var isPass = me.checkData(validate,me.form.shop)
             if(isPass){
@@ -530,6 +529,9 @@ export default {
                 }
                 if(!shop.city){
                     return this.$tip("请选择市",2)
+                }
+                if(!shop.address){
+                    return this.$tip("请输入详细地址",2)
                 }
                 
                 if(!shop.dat.lng){
