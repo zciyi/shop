@@ -400,8 +400,14 @@ export default {
         },
         areaChange(curkey,key,val,type){
             if(curkey==='city'&&!type){
+                this.form.shop.district = ""  
                 this.setDistrict()
-                this.form.shop.district = ""    
+                  
+            }else if(curkey==='province'&&!type){
+                this.form.shop.district = ""  
+                this.form.shop.city = ""  
+                this.setDistrict()
+
             }
             if(!type){
                 this.form.shop[key]  = ""

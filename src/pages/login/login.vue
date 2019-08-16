@@ -7,13 +7,13 @@
              <div class="loginTitle">登录</div> 
           </el-form-item>
           <el-form-item label="用户名">
-            <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
+            <el-input v-model="form.name" placeholder="请输入用户名" @click.enter="onSubmit"></el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input v-model="form.pws" type="password" placeholder="密码"></el-input>
+            <el-input v-model="form.pws" type="password" placeholder="密码" @click.enter="onSubmit"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="large" @click="onSubmit">立即登录</el-button>
+            <el-button type="primary" size="large" @click="onSubmit" >立即登录</el-button>
           </el-form-item>
         </el-form>
     </div>
@@ -33,18 +33,6 @@ export default {
     }
   },
   beforeCreate(){
-  },
-  mounted(){
-    var me = this
-    document.onkeyup = function (e) {  
-      if (window.event) e = window.event;    
-      var code = e.charCode || e.keyCode;    
-      if (code == 13&&me.form.name&&me.form.pws) {    
-        me.onSubmit();  
-      }
-    }
-
-
   },
   methods:{
     onSubmit(){
