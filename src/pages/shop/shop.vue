@@ -158,7 +158,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="详细地址" required>
-                        <el-input v-model="form.shop.address"  @change="setDistrict" placeholder="请输入详细地址"></el-input>
+                        <el-input v-model="form.shop.address" @input="setDistrict" placeholder="请输入详细地址"></el-input>
                     </el-form-item>
                     <el-form-item label="位置">
                         <qqmap ref="qqmap" :geo="geo" :data="form.shop.dat" @updateGeo="updateGeo" @updateData="updateData"></qqmap>
