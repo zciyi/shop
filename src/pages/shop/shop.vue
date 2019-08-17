@@ -315,7 +315,7 @@ export default {
             url:"/getRegion",
             method:"get",
             query:{
-                parentId:0
+                parentId:1
             }
         }).then((re)=>{
             this.province = re
@@ -381,7 +381,7 @@ export default {
                 }
             }else{
                 this.form.bar ={
-                    picture:"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1409224092,1124266154&fm=26&gp=0.jpg"
+                    picture:""
                     ,link:""
                 }
             }
@@ -413,12 +413,14 @@ export default {
                 this.form.shop[key]  = ""
             }
             if(!val)return
+            var query = {}
+            if(val){
+                query.parentId= val||1
+            }
             this.$request({
                 url:"/getRegion",
                 method:"get",
-                query:{
-                    parentId:val||0
-                }
+                query:query
             }).then((re)=>{
                 this[key] = re
             })
