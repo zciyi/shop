@@ -159,8 +159,10 @@
                     </el-form-item>
                     <el-form-item label="详细地址" required>
                         <el-input v-model="form.shop.address" @input="setDistrict" placeholder="请输入详细地址"></el-input>
+                        <div style="color:red;line-height: normal;">腾讯地图操作指引：选择省-市-区 -> 输入详细地址 -> 点击设置设置门店坐标</div>
                     </el-form-item>
                     <el-form-item label="位置">
+                        
                         <qqmap ref="qqmap" :geo="geo" :data="form.shop.dat" @updateGeo="updateGeo" @updateData="updateData"></qqmap>
                         <div class="positionTip">
                             当前位置：{{demogeo||''}} ({{demodat.lng||0}},{{demodat.lat||0}})
