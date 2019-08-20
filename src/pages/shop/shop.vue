@@ -128,7 +128,7 @@
                     <el-form-item label="排序号" required>
                         <el-input v-model="form.shop.orderNumber" placeholder="请输入排序号"></el-input>
                     </el-form-item>
-                    <el-form-item label="电话号码" required>
+                    <el-form-item label="电话号码">
                         <el-input v-model="form.shop.phone" placeholder="请输入电话号码"></el-input>
                     </el-form-item>
                     <el-form-item label="省市区" required>
@@ -520,16 +520,15 @@ export default {
             let me = this
             let shop = this.form.shop
             var validate ={
-                phone:"请输入电话号码",
                 orderNumber:{
-                tip:"请输入排序号",
-                validate:function(val){
-                    if(!me.$util.RegExp.number.test(val)){
-                        this.tip = "排序号格式不正确"
-                        return false
+                    tip:"请输入排序号",
+                    validate:function(val){
+                        if(!me.$util.RegExp.number.test(val)){
+                            this.tip = "排序号格式不正确"
+                            return false
+                        }
+                        return true
                     }
-                    return true
-                }
                 }
             }
             var isPass = me.checkData(validate,me.form.shop)
